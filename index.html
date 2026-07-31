@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Optician Training</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Interactive optician training — fundamentals of ophthalmic optics and dispensing, plus product knowledge.">
+<style>
+  :root{
+    --bg:#FBFAF7; --surface:#FFFFFF; --ink:#1C1E20; --muted:#5B6166;
+    --line:#E4E2DB; --green:#0E7A4E; --red:#BE3730;
+    --green-soft:#E7F3ED; --red-soft:#F9E9E8; --gold:#8A6D1F;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --serif:Charter,"Bitstream Charter",Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#141618; --surface:#1D2023; --ink:#ECEDEA; --muted:#9AA0A3;
+      --line:#2E3236; --green:#4CC08A; --red:#E5726B;
+      --green-soft:#17352A; --red-soft:#3A211F; --gold:#D3B45C;
+    }
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--serif); line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  main{max-width:680px; margin:0 auto; padding:9vh 24px 12vh}
+  .kicker{
+    font-family:var(--mono); font-size:12px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--gold); margin:0 0 14px;
+  }
+  h1{font-size:clamp(30px,6vw,42px); line-height:1.15; margin:0 0 14px; font-weight:600}
+  .lede{color:var(--muted); font-size:18px; margin:0 0 52px; max-width:52ch}
+  .card{
+    display:block; text-decoration:none; color:inherit;
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:12px; padding:26px 28px; margin-bottom:18px;
+    transition:border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+  }
+  .card:hover, .card:focus-visible{
+    border-color:var(--green); transform:translateY(-2px);
+    box-shadow:0 8px 24px rgba(0,0,0,.07); outline:none;
+  }
+  .card .num{
+    font-family:var(--mono); font-size:12px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--green); margin:0 0 8px;
+  }
+  .card h2{font-size:22px; margin:0 0 8px; font-weight:600}
+  .card p{margin:0; color:var(--muted); font-size:15.5px}
+  .card .go{
+    display:inline-block; margin-top:14px; font-family:var(--sans);
+    font-size:14px; color:var(--green); font-weight:600;
+  }
+  .card:hover .go::after{content:" →"}
+  footer{
+    margin-top:64px; padding-top:24px; border-top:1px solid var(--line);
+    font-family:var(--sans); font-size:13px; color:var(--muted);
+  }
+</style>
+</head>
+<body>
+<main>
+  <p class="kicker">Interactive Training</p>
+  <h1>Optician Training</h1>
+  <p class="lede">A two-part interactive course: the fundamentals every dispensing optician needs, then the products and how to talk about them. Work through in order, at your own pace — progress checks included.</p>
+
+  <a class="card" href="part1.html">
+    <p class="num">Part 1</p>
+    <h2>Optician Fundamentals</h2>
+    <p>Ophthalmic optics from the ground up — prescriptions, lens design, materials, measurements, and dispensing essentials.</p>
+    <span class="go">Start Part 1</span>
+  </a>
+
+  <a class="card" href="part2.html">
+    <p class="num">Part 2</p>
+    <h2>What We Sell</h2>
+    <p>Product knowledge and positioning — lens packages, coatings, and how to match the right product to the patient.</p>
+    <span class="go">Start Part 2</span>
+  </a>
+
+  <footer>Best experienced on desktop or tablet. Both parts save your quiz progress in your browser.</footer>
+</main>
+</body>
+</html>

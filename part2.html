@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>VHDO · What We Sell</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --bg:#FBFAF7; --surface:#FFFFFF; --ink:#1C1E20; --muted:#5B6166;
+    --line:#E4E2DB; --green:#0E7A4E; --red:#BE3730;
+    --green-soft:#E7F3ED; --red-soft:#F9E9E8; --gold:#8A6D1F; --gold-soft:#F5EEDC;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --serif:Charter,"Bitstream Charter",Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#141618; --surface:#1D2023; --ink:#ECEDEA; --muted:#9AA0A3;
+      --line:#2E3236; --green:#4CC08A; --red:#E5726B;
+      --green-soft:#17352A; --red-soft:#3A211F; --gold:#D3B45C; --gold-soft:#332B15;
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#FBFAF7; --surface:#FFFFFF; --ink:#1C1E20; --muted:#5B6166;
+    --line:#E4E2DB; --green:#0E7A4E; --red:#BE3730;
+    --green-soft:#E7F3ED; --red-soft:#F9E9E8; --gold:#8A6D1F; --gold-soft:#F5EEDC;
+  }
+  :root[data-theme="dark"]{
+    --bg:#141618; --surface:#1D2023; --ink:#ECEDEA; --muted:#9AA0A3;
+    --line:#2E3236; --green:#4CC08A; --red:#E5726B;
+    --green-soft:#17352A; --red-soft:#3A211F; --gold:#D3B45C; --gold-soft:#332B15;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.65}
+
+  /* ---------- header ---------- */
+  .top{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--line)}
+  .top-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:10px 20px}
+  .mark{font-family:var(--sans);font-weight:800;letter-spacing:.14em;font-size:14px}
+  .mark small{display:block;font-weight:400;letter-spacing:.08em;font-size:10.5px;color:var(--muted);text-transform:uppercase}
+  .prog{margin-left:auto;display:flex;align-items:center;gap:10px;font-family:var(--sans);font-size:12.5px;color:var(--muted)}
+  .prog-bar{width:120px;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+  .prog-bar i{display:block;height:100%;width:0%;background:var(--green);transition:width .4s ease}
+  @media (prefers-reduced-motion: reduce){ .prog-bar i{transition:none} }
+
+  /* ---------- shell ---------- */
+  .shell{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:225px minmax(0,1fr);gap:44px;padding:0 20px}
+  @media (max-width:900px){ .shell{grid-template-columns:minmax(0,1fr)} }
+
+  /* ---------- rail nav ---------- */
+  .rail{position:sticky;top:64px;align-self:start;height:calc(100vh - 80px);overflow-y:auto;padding:26px 0 30px;font-family:var(--sans)}
+  .rail-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin:0 0 10px}
+  .rail a{display:flex;align-items:center;gap:9px;padding:6px 8px 6px 0;color:var(--muted);text-decoration:none;font-size:13px;line-height:1.3;border-radius:6px}
+  .rail a:hover{color:var(--ink)}
+  .rail a.active{color:var(--ink);font-weight:600}
+  .tick{flex:0 0 14px;width:14px;height:14px;border-radius:50%;border:1.5px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:9px;color:transparent}
+  a.done .tick{background:var(--green);border-color:var(--green);color:#fff}
+  @media (max-width:900px){
+    .rail{position:sticky;top:47px;z-index:30;height:auto;display:flex;gap:6px;overflow-x:auto;padding:8px 0;background:var(--bg);border-bottom:1px solid var(--line);margin:0 -20px;padding-left:20px;padding-right:20px}
+    .rail-label{display:none}
+    .rail a{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--surface);white-space:nowrap}
+    .rail a .nav-t{display:none}
+    .rail a.done{border-color:var(--green)}
+  }
+
+  main{padding-bottom:90px;min-width:0}
+
+  /* ---------- hero: sales ticket ---------- */
+  .hero{padding:64px 0 30px;text-align:center}
+  .ticket{font-family:var(--mono);max-width:390px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:20px 22px 16px;text-align:left;font-size:13px;line-height:2;box-shadow:0 1px 0 var(--line)}
+  .ticket .t-hd{text-align:center;font-family:var(--sans);font-weight:800;letter-spacing:.18em;font-size:13px;border-bottom:1px dashed var(--line);padding-bottom:8px;margin-bottom:10px}
+  .ticket .t-hd small{display:block;font-weight:400;letter-spacing:.1em;font-size:9.5px;color:var(--muted);text-transform:uppercase;margin-top:2px}
+  .t-row{display:flex;justify-content:space-between;gap:12px}
+  .t-row b{font-variant-numeric:tabular-nums;font-weight:700}
+  .t-row.dim{color:var(--muted)}
+  .t-total{border-top:1px dashed var(--line);margin-top:8px;padding-top:8px;font-size:15px}
+  .t-total b{color:var(--green)}
+  .t-row{opacity:0;transform:translateY(5px);animation:rise .5s ease forwards}
+  .t-row:nth-child(3){animation-delay:.08s}.t-row:nth-child(4){animation-delay:.16s}
+  .t-row:nth-child(5){animation-delay:.24s}.t-total{animation-delay:.32s}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){ .t-row{opacity:1;transform:none;animation:none} }
+  .duo{height:4px;max-width:250px;margin:26px auto 0;display:flex;border-radius:2px;overflow:hidden}
+  .duo i{flex:1}.duo i:first-child{background:var(--green)}.duo i:last-child{background:var(--red)}
+  .hero p{max-width:60ch;margin:24px auto 0;color:var(--muted);text-align:left}
+  .hero .part{font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-top:22px}
+
+  /* ---------- chapters ---------- */
+  .chapter{padding:52px 0 8px;border-top:1px solid var(--line);margin-top:44px}
+  .eyebrow{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:0 0 6px}
+  h2{font-family:var(--sans);font-weight:800;font-size:clamp(23px,3.4vw,30px);letter-spacing:-.01em;line-height:1.15;margin:0 0 18px;text-wrap:balance}
+  h3{font-family:var(--sans);font-size:16px;font-weight:700;margin:30px 0 10px}
+  .prose{max-width:66ch}
+  .prose p{margin:0 0 14px}
+  .prose ul,.prose ol{margin:0 0 14px;padding-left:22px}
+  .prose li{margin-bottom:6px}
+  strong{font-weight:700}
+  code{font-family:var(--mono);font-size:.88em;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:1px 5px;white-space:nowrap}
+  .tablewrap{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+  table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:13.5px;min-width:480px}
+  th{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;text-align:left;color:var(--muted);font-weight:600}
+  th,td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+  td:first-child{font-weight:600}
+  td.r,th.r{text-align:right}
+  .num{font-variant-numeric:tabular-nums}
+  td .num,td code{font-weight:400}
+
+  /* patient-language card */
+  .script{margin:20px 0;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--green);border-radius:0 8px 8px 0;padding:14px 18px;max-width:64ch}
+  .script .lab{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin:0 0 6px}
+  .script p{margin:0;font-style:italic}
+
+  /* caution / correction card */
+  .note{margin:20px 0;background:var(--gold-soft);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 18px;max-width:64ch}
+  .note .lab{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 6px}
+  .note p{margin:0 0 10px}
+  .note p:last-child{margin:0}
+
+  /* ---------- quiz ---------- */
+  .quiz{margin:34px 0 10px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .quiz-duo{height:3px;display:flex}.quiz-duo i{flex:1}
+  .quiz-duo i:first-child{background:var(--green)}.quiz-duo i:last-child{background:var(--red)}
+  .quiz-in{padding:18px 20px 8px}
+  .quiz-t{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin:0 0 4px}
+  .quiz-s{font-family:var(--sans);font-size:12px;color:var(--muted);margin:0 0 14px}
+  .q{margin:0 0 20px}
+  .q-t{font-family:var(--sans);font-size:14.5px;font-weight:600;margin:0 0 10px;line-height:1.45}
+  .opts{display:flex;flex-direction:column;gap:7px}
+  .opt{font-family:var(--sans);font-size:13.5px;text-align:left;padding:9px 13px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:7px;cursor:pointer;line-height:1.4}
+  .opt:hover{border-color:var(--muted)}
+  .opt:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+  .q.locked .opt{cursor:default;opacity:.55}
+  .q.locked .opt:hover{border-color:var(--line)}
+  .q .opt.right{opacity:1;background:var(--green-soft);border-color:var(--green);font-weight:600}
+  .q .opt.wrong{opacity:1;background:var(--red-soft);border-color:var(--red)}
+  .expl{display:none;font-family:var(--sans);font-size:13px;margin-top:9px;padding:9px 12px;border-radius:6px;background:var(--bg);border:1px dashed var(--line);color:var(--muted)}
+  .q.locked .expl{display:block}
+  .q-mark{font-family:var(--mono);font-size:11px;margin-left:6px}
+  .q-mark.ok{color:var(--green)} .q-mark.no{color:var(--red)}
+
+  /* ---------- 30-day checklist ---------- */
+  .wk{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin:26px 0 8px}
+  .checks{display:flex;flex-direction:column;gap:8px;max-width:66ch}
+  .chk{display:flex;gap:11px;align-items:flex-start;font-family:var(--sans);font-size:14px;line-height:1.5;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:11px 14px;cursor:pointer;color:var(--ink)}
+  .chk:hover{border-color:var(--muted)}
+  .chk:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+  .chk .box{flex:0 0 17px;width:17px;height:17px;margin-top:2px;border:1.5px solid var(--line);border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;color:transparent}
+  .chk.on{border-color:var(--green);background:var(--green-soft)}
+  .chk.on .box{background:var(--green);border-color:var(--green);color:#fff}
+  .chk-count{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin-top:14px}
+
+  /* ---------- completion ---------- */
+  .finish{margin-top:56px;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:26px 26px 22px;text-align:center}
+  .finish h2{margin-bottom:6px}
+  .score{font-family:var(--mono);font-size:38px;font-weight:700;margin:10px 0 2px;font-variant-numeric:tabular-nums}
+  .score.pass{color:var(--green)} .score.mid{color:var(--gold)}
+  .finish p{color:var(--muted);font-family:var(--sans);font-size:14px;max-width:52ch;margin:8px auto}
+  .finish a{color:var(--green)}
+  .resetbtn{font-family:var(--sans);font-size:12.5px;margin-top:12px;background:none;border:1px solid var(--line);color:var(--muted);padding:7px 14px;border-radius:7px;cursor:pointer}
+  .resetbtn:hover{color:var(--ink);border-color:var(--muted)}
+  .resetbtn:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+  footer{margin-top:40px;text-align:center;font-family:var(--sans);font-size:11.5px;color:var(--muted)}
+  footer a{color:var(--muted)}
+</style>
+
+<div class="top"><div class="top-in">
+  <div class="mark">VHDO<small>Optician Training · Part 2</small></div>
+  <div class="prog"><span id="progTxt">0 / 8 chapters</span><div class="prog-bar"><i id="progFill"></i></div></div>
+</div></div>
+
+<div class="shell">
+<nav class="rail" id="rail" aria-label="Chapters">
+  <p class="rail-label">Chapters</p>
+  <a href="#ch12" data-ch="12"><span class="tick">✓</span><span class="nav-n">12</span><span class="nav-t">&nbsp;What We Actually Sell</span></a>
+  <a href="#ch13" data-ch="13"><span class="tick">✓</span><span class="nav-n">13</span><span class="nav-t">&nbsp;Exam Services We Bill</span></a>
+  <a href="#ch14" data-ch="14"><span class="tick">✓</span><span class="nav-n">14</span><span class="nav-t">&nbsp;Our Lens Menu</span></a>
+  <a href="#ch15" data-ch="15"><span class="tick">✓</span><span class="nav-n">15</span><span class="nav-t">&nbsp;Coatings &amp; Treatments</span></a>
+  <a href="#ch16" data-ch="16"><span class="tick">✓</span><span class="nav-n">16</span><span class="nav-t">&nbsp;Contact Lenses</span></a>
+  <a href="#ch17" data-ch="17"><span class="tick">✓</span><span class="nav-n">17</span><span class="nav-t">&nbsp;Insurance at VHDO</span></a>
+  <a href="#ch18" data-ch="18"><span class="tick">✓</span><span class="nav-n">18</span><span class="nav-t">&nbsp;Sell Like Our Best</span></a>
+  <a href="#ch19" data-ch="c"><span class="tick">✓</span><span class="nav-n">19</span><span class="nav-t">&nbsp;Your First 30 Days</span></a>
+</nav>
+
+<main>
+<section class="hero">
+  <div class="ticket" role="img" aria-label="VHDO sales summary styled as a register ticket: 1,215 orders, $590,197 net over two weeks, average order $526">
+    <div class="t-hd">VHDO<small>All 11 offices · 13–25 July 2026</small></div>
+    <div class="t-row dim"><span>ORDERS</span><b>1,215</b></div>
+    <div class="t-row dim"><span>LINE ITEMS</span><b>6,069</b></div>
+    <div class="t-row dim"><span>NET SALES</span><b>$590,197</b></div>
+    <div class="t-row t-total"><span>AVG ORDER</span><b>$526</b></div>
+  </div>
+  <div class="duo"><i></i><i></i></div>
+  <p class="part">Part Two of the VHDO Training Manual</p>
+  <p>Part 1 taught you optical in general. This part teaches you <em>this practice</em>. Everything in these chapters comes from VHDO's own sales records — 6,069 line items across all 11 offices for the pay period of 13–25 July 2026, plus the full item-level catalog from May 2026. Where you see a percentage or a dollar figure, it describes what we actually sold, not what an optical textbook says a practice sells.</p>
+  <p>In that two-week window the company did <strong>$590,197 net across 1,215 orders — an average order value of $526.</strong> Hold onto that number. It's the bar.</p>
+  <p>One habit to build now: when a product name appears in <code>this style</code> below, that is the exact wording you'll see on the screen in Eyefinity. Learn to recognise them by sight.</p>
+</section>
+
+<!-- ================= CH 12 ================= -->
+<section class="chapter" id="ch12">
+  <p class="eyebrow">Chapter 12</p>
+  <h2>What We Actually Sell</h2>
+  <div class="prose">
+    <p>Most people assume an optometry practice is a glasses shop with an eye doctor attached. At VHDO it's closer to the reverse.</p>
+    <div class="tablewrap"><table>
+      <tr><th>What we sell</th><th class="r">Share of net revenue</th></tr>
+      <tr><td>Exams and professional services</td><td class="r num">44.5%</td></tr>
+      <tr><td>Contact lenses</td><td class="r num">23.4%</td></tr>
+      <tr><td>Frames</td><td class="r num">11.4%</td></tr>
+      <tr><td>Spectacle lenses (base type)</td><td class="r num">7.3%</td></tr>
+      <tr><td>Coatings</td><td class="r num">5.3%</td></tr>
+      <tr><td>Lens design upgrades (Style Add-on)</td><td class="r num">3.1%</td></tr>
+      <tr><td>Lens materials (Material Add-on)</td><td class="r num">2.5%</td></tr>
+      <tr><td>Photochromic / polarized (Color-Coat Add-on)</td><td class="r num">2.0%</td></tr>
+      <tr><td>Everything else (lab fees, edging, shipping, repairs)</td><td class="r num">~0.5%</td></tr>
+    </table></div>
+    <p><strong>Exams and contact lenses are two-thirds of the business.</strong> All spectacle materials together — frames, lenses, coatings and every upgrade — come to about 28.6%. VHDO is an exam-and-contact-lens practice first and a dispensary second. That shapes your day: the patient in front of you is far more often here for an exam or a contact lens supply than to browse frames.</p>
+    <p>Two more numbers worth knowing on day one. <strong>Returns and reversals are 7.7% of gross</strong> — about $49,000 in two weeks; careful measurement is revenue, not paperwork. And <strong>order value varies enormously by type</strong>: a contact lens order averages <strong>$850</strong>, a spectacle order <strong>$635</strong>, an exam that converts to materials <strong>$550</strong>, and an exam where the patient leaves with nothing <strong>$298</strong>.</p>
+  </div>
+  <div class="quiz" data-ch="12"></div>
+</section>
+
+<!-- ================= CH 13 ================= -->
+<section class="chapter" id="ch13">
+  <p class="eyebrow">Chapter 13</p>
+  <h2>Exam Services We Bill</h2>
+  <div class="prose">
+    <p>This is the one area where our sales export carries full item descriptions, so these figures are current. These are the codes you'll see on nearly every ticket.</p>
+    <p><strong>The core exams.</strong> <code>92004 - Comprehensive Exam - New Pt</code> and <code>92014 - Comprehensive Exam - Existing</code> are both <strong>$226</strong>. We billed 364 new and 421 established in two weeks. If a patient asks what the exam is, keep it simple: <em>"It's the full health-and-vision exam — the doctor checks how you see and how your eyes are doing."</em></p>
+    <p><strong><code>92015 - Refraction</code>, $99.</strong> This is the single highest-frequency line in the practice: <strong>785 units</strong>. Comprehensive exams also totalled exactly 785, so refraction attaches essentially 1:1 — it rides along with every comprehensive exam. Treat it as automatic. It should never be missed. <em>"That's the part where the doctor dials in the lens powers — the 'one or two' test."</em></p>
+    <p><strong><code>S9986.4 - Screening Retinal Photos</code>, $49.</strong> Our signature elective: <strong>702 units</strong> in two weeks. A digital photograph of the back of the eye, no dilation drops needed. Learn to offer this consistently — it's the fastest win available to a new hire.</p>
+    <div class="script"><p class="lab">Say it to a patient</p><p>"It's a photo of the back of your eye. It lets the doctor see the retina without dilating you, and we keep it on file so next year we can compare."</p></div>
+    <p><strong><code>S9986.2 - Screening Frequency Doubling Technology</code>, $50.</strong> The secondary screening, 77 units. A quick peripheral-vision check.</p>
+    <h3>The Contact Lens Fitting Ladder</h3>
+    <p>A fitting is a separate service from the exam, priced by complexity:</p>
+    <div class="tablewrap"><table>
+      <tr><th>Code</th><th>What it is</th><th class="r">Retail</th></tr>
+      <tr><td><code>92310 - CL Fit New</code></td><td>Standard fit, new wearer</td><td class="r num">$159</td></tr>
+      <tr><td><code>92310.1 - CL Fit, Existing Pt</code></td><td>Standard refit, current wearer</td><td class="r num">$159</td></tr>
+      <tr><td><code>92310.30 - CL Fit- Sphere</code></td><td>Straightforward sphere fit</td><td class="r num">$159</td></tr>
+      <tr><td><code>92310.2 - Complex Cl Fit, New Pt</code></td><td>Toric, multifocal or difficult cornea</td><td class="r num">$189</td></tr>
+      <tr><td><code>92310-11 - Toric Or Specialty</code></td><td>Astigmatism-specific</td><td class="r num">$189</td></tr>
+      <tr><td><code>92310.3 - Complex Cl Fit, Existing Pt</code></td><td>Complex refit</td><td class="r num">$249</td></tr>
+      <tr><td><code>92310.14 - CL Fit - Bifocals</code></td><td>Multifocal contacts</td><td class="r num">$249</td></tr>
+      <tr><td><code>92310.4 - Complex Cl Fit - Level 2</code></td><td>Most involved fit</td><td class="r num">$399</td></tr>
+      <tr><td><code>92310.15</code></td><td>Keratoconus</td><td class="r num">$399</td></tr>
+    </table></div>
+    <p><strong>Medical office visits: <code>99202</code>–<code>99205</code> (new) and <code>99212</code>–<code>99214</code> (established).</strong> Billed when the visit is a medical problem — pink eye, dry eye, an injury, a diabetic check — rather than routine vision. <code>99213</code> alone was 53 units at $295. Part 1, Chapter 9 explained this distinction; here is where you see it on the ticket.</p>
+    <p><strong>Diagnostics.</strong> <code>92250</code> fundus photos ($169), <code>92133</code> / <code>92132</code> / <code>92134</code> OCT scans ($299), <code>92083</code> / <code>92081</code> visual fields ($199), <code>92285</code> external ocular photography, <code>76514</code> pachymetry ($25). The doctor orders these — but recognise them so you can answer "what's this charge?" without fumbling.</p>
+  </div>
+  <div class="quiz" data-ch="13"></div>
+</section>
+
+<!-- ================= CH 14 ================= -->
+<section class="chapter" id="ch14">
+  <p class="eyebrow">Chapter 14</p>
+  <h2>Our Lens Menu</h2>
+  <div class="prose">
+    <p>A spectacle order in Eyefinity is built in layers: a <strong>base type</strong>, then a <strong>style</strong> (design), a <strong>material</strong>, and a <strong>color/coat</strong>. Every lens carries a line in all four categories even when the value is $0 — so don't be fooled into thinking a 100% "attachment rate" on those categories means anything. What matters is whether the line has dollars on it.</p>
+    <h3>Base Type — What Shape of Vision the Lens Delivers</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Item</th><th class="r">Share of lenses</th></tr>
+      <tr><td><code>Single Vision</code></td><td class="r num">69.5%</td></tr>
+      <tr><td><code>Progressive</code></td><td class="r num">27.4%</td></tr>
+      <tr><td><code>Bi-Focal</code></td><td class="r num">3.1%</td></tr>
+    </table></div>
+    <h3>Style Add-on — The Design Upgrade</h3>
+    <p><code>Single Vision</code>, <code>Flat Top 28</code> and <code>Progressive - Standard</code> sit here at $0; they are the no-upgrade default. Everything else carries real money. Our ladder:</p>
+    <ul>
+      <li><strong>Unity</strong>, the house family — <code>Unity Svxtra Single Vision</code> (216 units, our biggest design seller), <code>UNITY V3 Elite</code> (116), <code>UNITY Via Elite II</code> (62), <code>UNITY Via II</code>, <code>UNITY Via OfficePro 5ft</code>.</li>
+      <li><strong>Varilux</strong>, premium tier — <code>Comfort 2 DRX</code>, <code>Physio</code>, <code>Physio Drx</code>, <code>X Design Technology</code>, <code>XR Design Technology</code>, <code>Comfort Max</code>.</li>
+      <li><strong>Shamir</strong> — <code>Autograph Intelligence Variable</code>, <code>Spectrum+ 16mm</code>, <code>Element</code>.</li>
+      <li><strong>Essilor Eyezen+ 1–4</strong> for heavy screen users, <code>Essilor Computer Lens</code> for dedicated intermediate, and <code>Stellest</code> for childhood myopia management (doctor-directed only).</li>
+    </ul>
+    <h3>Material Add-on</h3>
+    <p><code>Polycarbonate</code> is the house default at <strong>81.9% of lenses</strong>. Hi-index (<code>Hi-Index Plastic 1.60 / 1.67 / 1.74</code>) is <strong>15.5%</strong>, and plain <code>Plastic</code> (CR-39) is nearly extinct at 2.7%. So the real conversation is almost never poly-versus-plastic — it's <strong>poly versus hi-index for a stronger prescription</strong>, exactly as Part 1, Chapter 5 described.</p>
+    <h3>Color/Coat Add-on</h3>
+    <p><code>Clear</code> is 75.8% of lenses at $0. Above that:</p>
+    <ul>
+      <li><strong>Photochromic — 17.2% of lenses.</strong> <code>Transitions Gray</code> (our biggest at 110 units), <code>Transitions Brown</code>, <code>Transitions XTRActive Gray/Brown</code>, <code>Transitions Ruby</code>, <code>Transitions Sapphire</code>, plus the <strong>SunSync</strong> family (<code>sunsync Elite Gray/Brown</code>, <code>Sunsync Drive XT Gray/Brown</code> — the Drive XT versions do activate behind a windshield) and <code>Sensity</code>.</li>
+      <li><strong>Polarized — 5.9% of lenses.</strong> <code>Polarized Gray C</code>, <code>Polarized Brown C</code>, <code>Polarized Green</code>, <code>Polarized True Gray</code>, and <code>Xperio UV</code>.</li>
+    </ul>
+    <p>Photochromic at 17% and polarized at 6% are the clearest headroom in the whole dispensary — and, as Chapter 17 shows, they're almost never covered by a plan, which means the recommendation is entirely down to you.</p>
+  </div>
+  <div class="quiz" data-ch="14"></div>
+</section>
+
+<!-- ================= CH 15 ================= -->
+<section class="chapter" id="ch15">
+  <p class="eyebrow">Chapter 15</p>
+  <h2>Coatings and Treatments</h2>
+  <div class="prose">
+    <p><strong>Read this first: AR is already a settled habit here. 91.8% of lenses leave with an anti-reflective or premium coating.</strong> You are not being asked to build this behaviour — you're being asked not to break it. An optician who doesn't offer AR is immediately below the house standard.</p>
+    <p>Our menu, by volume:</p>
+    <div class="tablewrap"><table>
+      <tr><th>Item</th><th class="r">Units (May)</th><th>What it is</th></tr>
+      <tr><td><code>Backside UV</code></td><td class="r num">658</td><td>Cheap rear-surface UV block — <strong>not</strong> an AR sale</td></tr>
+      <tr><td><code>Std Anti Reflective</code></td><td class="r num">268</td><td>Entry-tier AR</td></tr>
+      <tr><td><code>TechShield Blue UVR</code></td><td class="r num">246</td><td>Our #1 coating by revenue ($36,777) — blue-light AR</td></tr>
+      <tr><td><code>Blue Ar</code></td><td class="r num">146</td><td>Generic blue-light AR</td></tr>
+      <tr><td><code>Anti-Reflective Coating A</code></td><td class="r num">146</td><td>Mid-tier AR</td></tr>
+      <tr><td><code>Crizal Prevencia UV</code></td><td class="r num">142</td><td>Premium blue-light AR ($21,119)</td></tr>
+      <tr><td><code>TechShield Elite UVR</code></td><td class="r num">86</td><td>Premium AR with UV</td></tr>
+      <tr><td><code>Crizal Easy Pro UV</code></td><td class="r num">72</td><td>Premium AR</td></tr>
+      <tr><td><code>Crizal Rock UV</code></td><td class="r num">52</td><td>Premium, scratch-focused</td></tr>
+      <tr><td><code>Sharpview</code></td><td class="r num">38</td><td>Value AR</td></tr>
+      <tr><td><code>Shamir Glacier Plus / Expression / Basic</code></td><td class="r num">28</td><td>Shamir's AR family</td></tr>
+      <tr><td><code>TechShield Elite</code>, <code>Crizal Natural Look UV</code>, <code>Crizal Sapphire HR UV</code></td><td class="r num">38</td><td>Premium specialty</td></tr>
+    </table></div>
+    <p>Two things to take from that table. First, <strong><code>Backside UV</code> appears on 46.3% of lenses but it is a low-cost add, not an anti-reflective sale</strong> — never count it as one. Second, <strong>blue-light AR lands on 37.8% of all lenses, which is 41% of every AR we sell.</strong> <code>TechShield Blue UVR</code> and <code>Crizal Prevencia UV</code> are the default recommendation here, not an exotic upsell.</p>
+    <h3>Benefit Language That Works</h3>
+    <p>Stay honest — Part 1, Chapter 6 set the standard and it holds:</p>
+    <div class="script"><p class="lab">Say it to a patient</p><p>AR: "It takes the glare out of the lens, so you see better at night and people see your eyes instead of a reflection. It also wipes clean far more easily." · Blue-light AR: "A lot of people find long screen days more comfortable with it. I wouldn't promise more than that." · Premium vs standard: "Same idea, but the premium layer resists smudges and water — it stays clean with a lot less fussing."</p></div>
+    <p><strong>How our own people attach it.</strong> Company average is 91.8%. Among the four associates in this analysis: <strong>Nancy 100%</strong> across 26 spectacle orders — the most reliable AR habit at real volume — <strong>Brianna 100%</strong>, <strong>Sherief 93.3%</strong>, <strong>Amy 87.5%</strong>. Nancy's number is the one to aim at, because she's holding it at volume.</p>
+  </div>
+  <div class="quiz" data-ch="15"></div>
+</section>
+
+<!-- ================= CH 16 ================= -->
+<section class="chapter" id="ch16">
+  <p class="eyebrow">Chapter 16</p>
+  <h2>Contact Lenses</h2>
+  <div class="prose">
+    <p>Contact lenses are 23.4% of revenue and carry the <strong>highest average order value in the practice at $850</strong>. If you learn one product area deeply in your first month, make it this one.</p>
+    <p><strong>Modality split</strong>, classified by brand rather than pack size:</p>
+    <div class="tablewrap"><table>
+      <tr><th>Modality</th><th class="r">Units</th><th class="r">Share</th></tr>
+      <tr><td>Daily disposable</td><td class="r num">1,891</td><td class="r num">74.3%</td></tr>
+      <tr><td>Monthly</td><td class="r num">443</td><td class="r num">17.4%</td></tr>
+      <tr><td>Two-week</td><td class="r num">163</td><td class="r num">6.4%</td></tr>
+      <tr><td>Weekly (<code>Precision 7</code>)</td><td class="r num">37</td><td class="r num">1.5%</td></tr>
+      <tr><td>Specialty / RGP</td><td class="r num">12</td><td class="r num">0.5%</td></tr>
+    </table></div>
+    <p><strong>Three out of four contact lens units we sell are dailies</strong> — treat them as the default recommendation. Monthlies, essentially the <code>Biofinity</code> and <code>Air Optix</code> families, are the cost-conscious alternative. Two-week is a shrinking legacy category limited to the <code>Acuvue Oasys</code> 6/12/24-pack line. Separately, <strong>33.0% of units are toric</strong> and <strong>9.3% multifocal</strong>.</p>
+    <h3>Brands You'll Handle</h3>
+    <ul>
+      <li><strong>J&amp;J Acuvue</strong> — <code>Acuvue Oasys Hydraluxe 1-Day 90pk</code> is our biggest contact lens SKU (493 units, $64,090), then <code>Acuvue Oasys 1-Day For Astig 90pk</code> (254) and <code>Acuvue Oasys Max 1-Day 90pk</code> (139). Also <code>Acuvue Oasys</code> 6/12/24pk, <code>Acuvue Vita</code>, <code>1 Day Acuvue Moist</code>.</li>
+      <li><strong>Alcon</strong> — <code>Dailies Total 1 90 Pack</code> (117), <code>Dailies Total1 For Astig</code>/<code>MF</code>, <code>Precision1 90 Pack</code> (113), <code>Precision 7</code>, <code>Total30</code>, <code>Air Optix Plus HydraGlyde</code>.</li>
+      <li><strong>CooperVision</strong> — <code>Biofinity</code> family (EW, Toric, XR Toric, Multifocal), <code>MyDay</code>/<code>MyDay Toric</code>, and <code>MiSight 1 Day 90pk</code> for childhood myopia control.</li>
+      <li><strong>Bausch + Lomb</strong> — <code>Infuse 90pk</code>, <code>Infuse For Astigmatism</code>/<code>Multifocal</code>, <code>Biotrue ONEday</code>.</li>
+      <li><strong>Specialty</strong> — <code>Paragon CRT</code> and <code>Boston Xo</code> ortho-k, billed through <code>CRT Program 1</code>.</li>
+    </ul>
+    <div class="script"><p class="lab">Dailies vs monthlies, in plain language</p><p>"Dailies are a fresh pair every morning — nothing to clean, nothing to store, and they're the healthiest option. Monthlies cost less over a year, but only if you're genuinely good about cleaning them every night."</p></div>
+    <p>Most people over-wear monthlies; say so kindly.</p>
+    <h3>The Fitting Fee Conversation — Have It Early</h3>
+    <p>This is where contact lens orders die, and it's entirely preventable. The fitting is a separate billable service (Part 1, Chapter 8 explains why), and for the patient it is the expensive part of the visit. From our insured lines, here is what patients actually paid:</p>
+    <div class="tablewrap"><table>
+      <tr><th>Fitting</th><th class="r">Avg copay</th><th class="r">Avg patient balance</th><th class="r">Total to patient</th></tr>
+      <tr><td><code>92310</code> new fit</td><td class="r num">$21.84</td><td class="r num">$50.70</td><td class="r num">~$73</td></tr>
+      <tr><td><code>92310.1</code> existing</td><td class="r num">$30.78</td><td class="r num">$42.90</td><td class="r num">~$74</td></tr>
+      <tr><td><code>92310-11</code> toric/specialty</td><td class="r num">$23.93</td><td class="r num">$82.03</td><td class="r num">~$106</td></tr>
+      <tr><td><code>92310.2</code> complex, new</td><td class="r num">$31.92</td><td class="r num">$83.14</td><td class="r num">~$115</td></tr>
+      <tr><td><code>92310.3</code> complex, existing</td><td class="r num">$37.27</td><td class="r num">$91.70</td><td class="r num">~$129</td></tr>
+    </table></div>
+    <p>A complex fit leaves the patient over $100 out of pocket <strong>on top of</strong> the exam. Say it before the fitting, never at checkout:</p>
+    <div class="script"><p class="lab">Say it before the fitting</p><p>"Before we start — your plan covers the exam, and the contact lens fitting is a separate service. For your prescription that's likely to run around $115 out of pocket. Does that work for you today?"</p></div>
+    <p>A patient who hears that up front rarely objects. A patient who hears it at the register frequently cancels.</p>
+  </div>
+  <div class="quiz" data-ch="16"></div>
+</section>
+
+<!-- ================= CH 17 ================= -->
+<section class="chapter" id="ch17">
+  <p class="eyebrow">Chapter 17</p>
+  <h2>Insurance at VHDO</h2>
+  <div class="prose">
+    <div class="note"><p class="lab">A necessary correction to Part 1</p>
+      <p>Chapter 9 of Part 1 lists VSP, EyeMed, Davis Vision, Spectera/UnitedHealthcare and Superior Vision as "the big national vision plans" and says Part 2 will cover which ones VHDO is in-network with. <strong>It cannot, and this chapter does not.</strong> No carrier or plan name exists anywhere in VHDO's exported sales, production, receivables or daily-closing data — insurance appears only as dollar amounts. That national list is plausible for Northern Virginia but it is <strong>not sourced from VHDO's own records</strong>, and nobody should present it to a patient as our network until billing confirms it.</p>
+      <p><strong>Ask your manager or the billing team for the current in-network list, or read it off the Eyefinity/OfficeMate claim screens, on your first day.</strong> Everything else in this chapter is measured from our real numbers and you can rely on it.</p>
+    </div>
+    <p><strong>How much of our business runs through a plan.</strong> Insurance touches <strong>53.8% of line items but 71.9% of revenue</strong> — just over half the tickets, nearly three-quarters of the money.</p>
+    <p><strong>The most useful number in this manual:</strong> on an average $526 order, <strong>the patient pays about $278 and insurance pays about $248.</strong> Across the period that's $338,335 in patient responsibility against $301,013 in net insurance receivable. You will collect from the person standing in front of you roughly as often as you collect from a plan. Anyone who thinks of insurance as "the thing that pays" has it half wrong.</p>
+    <h3>Where Coverage Actually Applies</h3>
+    <p>This is the part that changes how you sell:</p>
+    <div class="tablewrap"><table>
+      <tr><th>Category</th><th class="r">% of lines with insurance</th></tr>
+      <tr><td>Contact lenses</td><td class="r num">62.5%</td></tr>
+      <tr><td>Frames</td><td class="r num">61.4%</td></tr>
+      <tr><td>Exams</td><td class="r num">60.8%</td></tr>
+      <tr><td>Coatings</td><td class="r num">58.4%</td></tr>
+      <tr><td>Lens base type</td><td class="r num">55.1%</td></tr>
+      <tr><td>Material Add-on</td><td class="r num">53.1%</td></tr>
+      <tr><td><strong>Style Add-on (premium designs)</strong></td><td class="r num"><strong>33.1%</strong></td></tr>
+      <tr><td><strong>Color/Coat Add-on (photochromic, polarized)</strong></td><td class="r num"><strong>14.7%</strong></td></tr>
+    </table></div>
+    <p>Read the bottom two rows again. <strong>Premium lens designs, photochromics and polarized are overwhelmingly out-of-pocket conversations.</strong> Only one in seven photochromic or polarized lines has any insurance on it at all. That is precisely where a trained recommendation, rather than a benefit table, decides the outcome.</p>
+    <p><strong>How a typical insured sale flows.</strong> The plan sets an <strong>allowance</strong> (its own price for the item), we write the difference from retail off as <strong>contractual expense</strong>, the patient pays a <strong>copay</strong> plus any <strong>balance</strong>, and the remainder becomes <strong>net insurance receivable</strong> we bill and collect later.</p>
+    <h3>Worked Example</h3>
+    <p>Established patient, exam plus a single-pair spectacle order, using real averages from the period:</p>
+    <div class="tablewrap"><table>
+      <tr><th>Service</th><th class="r">Retail</th><th class="r">Plan allowance</th><th class="r">Copay</th><th class="r">Patient balance</th></tr>
+      <tr><td><code>92014</code> Comprehensive, existing</td><td class="r num">$226.00</td><td class="r num">$223.06</td><td class="r num">$3.80</td><td class="r num">$6.75</td></tr>
+      <tr><td><code>92015</code> Refraction</td><td class="r num">$99.00</td><td class="r num">$98.97</td><td class="r num">$0.01</td><td class="r num">$0.04</td></tr>
+      <tr><td><code>S9986.4</code> Retinal screening</td><td class="r num">$49.00</td><td class="r num">$22.43</td><td class="r num">$2.98</td><td class="r num">$29.55</td></tr>
+    </table></div>
+    <p><strong>Patient owes about $43 for the visit</strong> — and notice its shape. The refraction is effectively fully covered (four cents) and the comprehensive exam leaves about $10, so almost the entire $43 is the retinal screening, which the plan values at $22.43 against our $49. <strong>Retinal photos are an elective offer, not a covered benefit.</strong> Present them that way and quote the ~$30.</p>
+    <p><em>At the dispensary,</em> a spectacle order averages $635. Using our average patient responsibility per line — frame ~$143, lens base ~$60, coating ~$48, three add-on lines ~$96 combined — <strong>the patient's share lands near $347 and insurance covers the balance.</strong></p>
+    <p><strong>The rule that follows from all of this:</strong> verify eligibility <em>before</em> the patient starts choosing, and quote the out-of-pocket total <em>with insurance already applied</em> before you place the order. A patient who has heard the real number early will buy. A patient who discovers it at pickup becomes part of our 7.7% return rate.</p>
+  </div>
+  <div class="quiz" data-ch="17"></div>
+</section>
+
+<!-- ================= CH 18 ================= -->
+<section class="chapter" id="ch18">
+  <p class="eyebrow">Chapter 18</p>
+  <h2>Sell Like Our Best</h2>
+  <div class="prose">
+    <p>Four associates, same two weeks, measured against a company average of <strong>$526 AOV, 91.8% coating attach, 72.8% frame attach, and 42.6% exam-to-materials capture.</strong></p>
+    <div class="tablewrap"><table>
+      <tr><th></th><th class="r">Orders</th><th class="r">Net sales</th><th class="r">AOV</th><th class="r">Spectacle AOV</th><th class="r">Coating</th><th class="r">Frame</th><th class="r">Capture</th></tr>
+      <tr><td>Sherief</td><td class="r num">26</td><td class="r num">$17,130</td><td class="r num"><strong>$659</strong></td><td class="r num"><strong>$776</strong></td><td class="r num">93.3%</td><td class="r num">73.3%</td><td class="r num"><strong>63.2%</strong></td></tr>
+      <tr><td>Brianna</td><td class="r num">32</td><td class="r num">$15,926</td><td class="r num">$498</td><td class="r num">$727</td><td class="r num"><strong>100%</strong></td><td class="r num">57.1%</td><td class="r num">21.7%</td></tr>
+      <tr><td>Nancy</td><td class="r num">68</td><td class="r num">$32,819</td><td class="r num">$483</td><td class="r num">$633</td><td class="r num"><strong>100%</strong></td><td class="r num">69.2%</td><td class="r num">41.8%</td></tr>
+      <tr><td>Amy</td><td class="r num">71</td><td class="r num">$31,520</td><td class="r num">$444</td><td class="r num">$463</td><td class="r num">87.5%</td><td class="r num"><strong>87.5%</strong></td><td class="r num">53.7%</td></tr>
+    </table></div>
+    <p><strong>What the top performer does differently.</strong> Sherief runs the highest AOV in the group at $659 and the highest spectacle AOV at $776 — but the number that explains him is <strong>capture: 63.2% against a company average of 42.6%.</strong> He converts nearly two-thirds of the exams he touches into eyewear or contacts, and when he does, he builds a richer job. His mix is the most materials-weighted of the four (frames 18% of his revenue, lens base 13%, coatings 11.6%), and his contact lens orders average $924, also the highest. He is not a harder seller; he is a more complete one. He finishes the visit instead of ending it.</p>
+    <p>The others each hold one piece worth copying: <strong>Nancy's 100% AR discipline at real volume</strong>, <strong>Amy's 87.5% frame attach and throughput</strong>, <strong>Brianna's willingness to build a $727 job</strong>. Their gaps are instructive and opposite — Brianna sells beautifully to whoever she engages but at 21.7% capture isn't engaging enough of them; Amy gets the frame on almost every sale but at a $463 spectacle AOV isn't moving people up the lens ladder.</p>
+    <p>For context, the strongest performers company-wide run around <strong>$650–$700 AOV with 97–100% coating attach and 53–66% capture.</strong> That's the ceiling.</p>
+    <h3>Five Habits to Build in Your First Month</h3>
+    <ol>
+      <li><strong>Finish the visit.</strong> 57% of our exam patients leave with nothing — 535 of 935 exam orders. An exam-only ticket averages $298; one that converts averages $635. <strong>Every conversion is worth about $336.</strong> Walk the patient to the frame board yourself; don't hand them off to the door.</li>
+      <li><strong>Offer a second pair. Every time.</strong> Our multi-pair rate for the period was <strong>0.0%</strong> — 400 spectacle orders, 400 single pairs. Not one backup, computer pair or prescription sunglass across 11 offices in two weeks. This is the single largest untapped line in the business, and it is wide open.</li>
+      <li><strong>Never skip AR.</strong> 91.8% is the house standard. Blue-light AR is 41% of all AR we sell — <code>TechShield Blue UVR</code> and <code>Crizal Prevencia UV</code> are your defaults, not a stretch.</li>
+      <li><strong>Quote with insurance already applied, before they choose.</strong> The patient pays roughly $278 of a $526 order. Tell them their number early and the sale holds together.</li>
+      <li><strong>Price the contact lens fitting before the fitting.</strong> A complex fit runs the patient $115–$129 out of pocket. Surprise at checkout is where these orders die.</li>
+    </ol>
+    <p>And a sixth, quietly worth as much as any of them: <strong>measure carefully.</strong> Returns are 7.7% of gross. A remake costs the practice more than most upgrades earn.</p>
+  </div>
+  <div class="quiz" data-ch="18"></div>
+</section>
+
+<!-- ================= CH 19 ================= -->
+<section class="chapter" id="ch19">
+  <p class="eyebrow">Chapter 19</p>
+  <h2>Your First 30 Days</h2>
+  <div class="prose">
+    <p>Check items off as you complete them — your progress saves on this device, and your manager can review it with you at each week's end. Checking your first three items (Week 1) marks this chapter read.</p>
+  </div>
+  <p class="wk">Week 1 — Ground yourself</p>
+  <div class="checks" data-wk="1">
+    <button type="button" class="chk" data-id="w1a"><span class="box">✓</span><span>Read Part 1 end to end, doing the "Check yourself" questions; look up what you miss. Then read this part.</span></button>
+    <button type="button" class="chk" data-id="w1b"><span class="box">✓</span><span><strong>Get the current in-network carrier list from your manager or billing</strong> (see the note opening Chapter 17). Write it down.</span></button>
+    <button type="button" class="chk" data-id="w1c"><span class="box">✓</span><span>Recognise <code>92004</code>, <code>92014</code>, <code>92015</code> and <code>S9986.4</code> on a ticket without looking them up.</span></button>
+  </div>
+  <p class="wk">Week 2 — Language and product</p>
+  <div class="checks" data-wk="2">
+    <button type="button" class="chk" data-id="w2a"><span class="box">✓</span><span>Learn our four lens layers in Eyefinity: base type, style, material, color/coat.</span></button>
+    <button type="button" class="chk" data-id="w2b"><span class="box">✓</span><span>Memorise the coating ladder — <code>TechShield</code>, <code>Crizal</code>, <code>Shamir Glacier</code>, <code>Std Anti Reflective</code> — and remember <code>Backside UV</code> is not an AR sale.</span></button>
+    <button type="button" class="chk" data-id="w2c"><span class="box">✓</span><span>Say the AR benefit line out loud until it sounds like you (Chapter 15, and Part 1 Chapter 6).</span></button>
+    <button type="button" class="chk" data-id="w2d"><span class="box">✓</span><span>Learn the top five contact lens SKUs, and shadow a full fitting conversation including the fee.</span></button>
+  </div>
+  <p class="wk">Week 3 — Hands and numbers</p>
+  <div class="checks" data-wk="3">
+    <button type="button" class="chk" data-id="w3a"><span class="box">✓</span><span>Take 20 supervised PDs and 10 seg heights (Part 1, Chapter 3). Wrong seg height is our top progressive remake cause.</span></button>
+    <button type="button" class="chk" data-id="w3b"><span class="box">✓</span><span>Practise the poly-versus-hi-index conversation on a strong Rx (82% of our lenses are poly; know when to move up).</span></button>
+    <button type="button" class="chk" data-id="w3c"><span class="box">✓</span><span>Quote three orders end to end with insurance applied, and check your math against the ticket.</span></button>
+    <button type="button" class="chk" data-id="w3d"><span class="box">✓</span><span>Offer retinal screening at $49 to every exam patient for a full day.</span></button>
+  </div>
+  <p class="wk">Week 4 — Put it together</p>
+  <div class="checks" data-wk="4">
+    <button type="button" class="chk" data-id="w4a"><span class="box">✓</span><span>Walk five exam patients personally to the frame board. Track conversions; the house average is 42.6%.</span></button>
+    <button type="button" class="chk" data-id="w4b"><span class="box">✓</span><span>Offer a second pair to every spectacle patient. The company rate is 0.0% — anything you sell is a first.</span></button>
+    <button type="button" class="chk" data-id="w4c"><span class="box">✓</span><span>Recommend photochromic or polarized once a day. At 17% and 6% of lenses and mostly uninsured, that recommendation is entirely yours.</span></button>
+    <button type="button" class="chk" data-id="w4d"><span class="box">✓</span><span>Compare your AOV, coating attach and capture rate with your manager against Chapter 18.</span></button>
+  </div>
+  <p class="chk-count" id="chkCount">0 / 15 items checked</p>
+  <div class="prose">
+    <p style="margin-top:18px">The rule from Part 1 still governs everything here: <strong>when you don't know, say "let me find out."</strong> That applies double to insurance. Guessing at a patient's coverage is the one mistake in this manual that costs money in both directions.</p>
+  </div>
+</section>
+
+<!-- ================= FINISH ================= -->
+<section class="finish" id="finish">
+  <p class="eyebrow">Completion</p>
+  <h2>Your Score</h2>
+  <div class="score num" id="scoreBig">— / 21</div>
+  <p id="scoreMsg">Answer every chapter's Check Yourself questions to complete Part 2.</p>
+  <p>When you're done, show this screen to your trainer. If you haven't finished <a href="part1.html">Part 1: Optician Fundamentals</a>, go back and complete it first — everything here builds on it.</p>
+  <p style="font-style:italic">The bar is $526. The habits in Chapter 18 are how you clear it.</p>
+  <button class="resetbtn" id="resetBtn" type="button">Reset my progress</button>
+</section>
+
+<footer>VHDO · Visual Health Doctors of Optometry — Training Manual, Part 2 · <a href="part1.html">Part 1</a> · Progress is saved on this device only</footer>
+</main>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY="vhdo-train-p2";
+  var state={};
+  try{ state=JSON.parse(localStorage.getItem(KEY)||"{}")||{}; }catch(e){ state={}; }
+  state.answers=state.answers||{};   // qid -> chosen index
+  state.checks=state.checks||[];     // checked 30-day items
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} }
+
+  /* ---------------- quiz data ---------------- */
+  var QUIZ={
+    12:[
+      {q:"What's the single biggest share of VHDO's net revenue?",o:["Exams and professional services","Frames","Contact lenses","Coatings"],a:0,e:"Exams and professional services are 44.5% — with contacts at 23.4%, the two are two-thirds of the business. We're an exam-and-CL practice first, a dispensary second."},
+      {q:"Which order type carries the highest average value?",o:["A contact lens order — about $850","A spectacle order — about $635","An exam that converts — about $550","An exam-only visit — about $298"],a:0,e:"Contacts average $850, the highest AOV in the practice. That's why Chapter 16 says to learn that product area first."},
+      {q:"Returns and reversals run 7.7% of gross. What's the takeaway for you?",o:["Careful measurement is revenue — a remake costs more than most upgrades earn","Returns are normal, don't worry about them","Never accept a return","Always blame the lab"],a:0,e:"About $49,000 walked back out the door in two weeks. Precise PDs and seg heights are worth real money."}
+    ],
+    13:[
+      {q:"Which code attaches essentially 1:1 to every comprehensive exam?",o:["92015 - Refraction, $99","S9986.4 - Retinal Photos, $49","92310 - CL Fit, $159","99213 - Office visit, $295"],a:0,e:"785 refractions against exactly 785 comprehensive exams. It rides along automatically and should never be missed."},
+      {q:"A patient asks what the $49 retinal photo is. Best answer?",o:["\"A photo of the back of your eye — the doctor sees the retina without dilating you, and we keep it on file to compare next year.\"","\"It's required, everyone pays it.\"","\"It's basically an X-ray.\"","\"I'm not sure, it's on every ticket.\""],a:0,e:"S9986.4 is our signature elective — 702 units in two weeks. Offering it consistently is the fastest win for a new hire."},
+      {q:"A patient comes in with pink eye. Which code family does that visit bill under?",o:["99202–99214 — a medical office visit","92004/92014 — a comprehensive exam","92310 — a contact lens fitting","S9986.4 — a screening"],a:0,e:"Medical problems bill as 992xx medical visits against medical insurance, not the routine vision exam codes — the Part 1, Chapter 9 distinction on a real ticket."}
+    ],
+    14:[
+      {q:"What's the house default lens material?",o:["Polycarbonate — 81.9% of lenses","CR-39 plastic","Hi-index 1.67","Glass"],a:0,e:"Poly is the default; plain plastic is nearly extinct at 2.7%. The real conversation is poly versus hi-index on a stronger Rx."},
+      {q:"A ticket shows \"Progressive - Standard · $0\" on the Style line. What does that mean?",o:["It's the no-upgrade default — no design upgrade was sold","The patient got a free premium lens","The system made an error","A 100% style attachment rate"],a:0,e:"Every lens carries a line in all four layers even at $0. Only lines with dollars on them are real design sales — Unity, Varilux, Shamir."},
+      {q:"Where's the clearest sales headroom in the whole dispensary?",o:["Photochromic (17%) and polarized (6%) — and they're almost never plan-covered","AR coatings — nobody offers them","Frames — attach is very low","Refractions — often missed"],a:0,e:"AR is already at 91.8% and refraction attaches 1:1. Photochromic and polarized are the open ground, and the recommendation is entirely yours."}
+    ],
+    15:[
+      {q:"`Backside UV` shows on 46.3% of lenses. Does it count as an AR sale?",o:["No — it's a cheap rear-surface UV block, never count it as AR","Yes, it's our entry AR","Only on hi-index","Only if the patient asks"],a:0,e:"It's the most common single coating line but it is not anti-reflective. Counting it as AR overstates your attach rate."},
+      {q:"What are the default blue-light AR recommendations here?",o:["TechShield Blue UVR and Crizal Prevencia UV","Sharpview and Backside UV","Shamir Glacier Basic","Std Anti Reflective only"],a:0,e:"Blue-light AR is 41% of every AR we sell — TechShield Blue UVR is #1 by revenue. These are the house defaults, not an exotic upsell."},
+      {q:"The house AR attach standard is 91.8%. What's being asked of you?",o:["Don't break the habit — offer AR on essentially every job","Build the behaviour from scratch","Only offer AR on premium designs","Skip AR when insurance won't cover it"],a:0,e:"AR is a settled habit at VHDO — Nancy holds 100% at real volume. An optician who doesn't offer it is immediately below the standard."}
+    ],
+    16:[
+      {q:"What's the default contact lens recommendation at VHDO?",o:["Daily disposables — 74.3% of the units we sell","Monthlies — cheapest per year","Two-week lenses","RGP lenses"],a:0,e:"Three of four units are dailies: nothing to clean, healthiest option. Monthlies are the cost-conscious alternative — if the patient truly cleans them nightly."},
+      {q:"When do you bring up the contact lens fitting fee?",o:["Before the fitting starts — quote the likely out-of-pocket up front","At checkout, with the total","Only if the patient asks","Never — insurance handles it"],a:0,e:"A complex fit runs $115–$129 out of pocket on top of the exam. Said early, it's fine; discovered at the register, the order dies."},
+      {q:"What's our single biggest contact lens SKU?",o:["Acuvue Oasys Hydraluxe 1-Day 90pk","Biofinity Toric","Dailies Total 1 90 Pack","Air Optix Plus HydraGlyde"],a:0,e:"493 units and $64,090 — a J&J daily. Learn it, its astigmatism and Max siblings, and the rest of the top five by sight."}
+    ],
+    17:[
+      {q:"Where do you get VHDO's current in-network insurance list?",o:["From your manager or billing on day one — the national list in Part 1 isn't sourced from our records","Part 1, Chapter 9 — it lists them","Any optical textbook","Guess from what patients mention"],a:0,e:"No carrier name exists in our exported data. Never present Part 1's national list as our network until billing confirms it."},
+      {q:"On an average $526 order, roughly how much does the patient pay?",o:["About $278 — slightly more than insurance pays","Almost nothing — insurance covers it","All of it — plans rarely pay","About $50"],a:0,e:"$278 patient vs $248 insurance. You collect from the person in front of you as often as from a plan — quote their number early."},
+      {q:"Only 14.7% of photochromic/polarized lines carry any insurance. What follows?",o:["They're an out-of-pocket conversation — your trained recommendation decides the sale","Never offer them to insured patients","They're free with most plans","Only the doctor can offer them"],a:0,e:"One line in seven has coverage. That's exactly where a confident, honest recommendation — not a benefits table — wins the sale."}
+    ],
+    18:[
+      {q:"What was VHDO's multi-pair rate for the period?",o:["0.0% — 400 spectacle orders, 400 single pairs","About 20%","About 50%","Nobody tracks it"],a:0,e:"Not one second pair across 11 offices in two weeks. Offering a backup, computer pair or Rx sunglass is the widest-open line in the business."},
+      {q:"What single number best explains the top performer's results?",o:["Capture — converting 63.2% of exams into eyewear or contacts, vs 42.6% company average","Working more hours","Discounting heavily","Selling only premium frames"],a:0,e:"He finishes the visit instead of ending it — nearly two-thirds of his exams become a materials sale, and each conversion is a richer job."},
+      {q:"Roughly what is one exam-to-materials conversion worth?",o:["About $336 — the gap between a $298 exam-only ticket and a $635 converted one","About $50","About $1,000","It varies too much to say"],a:0,e:"57% of exam patients currently leave with nothing. Walking one patient to the frame board yourself is a ~$336 swing."}
+    ]
+  };
+
+  /* shuffle options per question, stable per render */
+  function renderQuizzes(){
+    document.querySelectorAll(".quiz").forEach(function(el){
+      var ch=el.getAttribute("data-ch"), qs=QUIZ[ch]; if(!qs) return;
+      var html='<div class="quiz-duo"><i></i><i></i></div><div class="quiz-in">'
+        +'<p class="quiz-t">Check yourself · Chapter '+ch+'</p>'
+        +'<p class="quiz-s">Answer all '+qs.length+' to mark this chapter complete.</p>';
+      qs.forEach(function(q,qi){
+        var qid=ch+"-"+qi;
+        var order=[0,1,2,3].slice(0,q.o.length);
+        var rot=(parseInt(ch,10)+qi)%q.o.length;
+        order=order.map(function(i){return (i+rot)%q.o.length;});
+        html+='<div class="q" data-qid="'+qid+'" data-a="'+q.a+'"><p class="q-t">'+(qi+1)+'. '+q.q+'<span class="q-mark"></span></p><div class="opts">';
+        order.forEach(function(oi){
+          html+='<button type="button" class="opt" data-oi="'+oi+'">'+q.o[oi]+'</button>';
+        });
+        html+='</div><div class="expl">'+q.e+'</div></div>';
+      });
+      el.innerHTML=html+"</div>";
+    });
+  }
+
+  function applyAnswer(qEl,chosen,firstTime){
+    var a=parseInt(qEl.getAttribute("data-a"),10);
+    qEl.classList.add("locked");
+    var mark=qEl.querySelector(".q-mark");
+    qEl.querySelectorAll(".opt").forEach(function(b){
+      var oi=parseInt(b.getAttribute("data-oi"),10);
+      b.disabled=true;
+      if(oi===a) b.classList.add("right");
+      else if(oi===chosen) b.classList.add("wrong");
+    });
+    if(chosen===a){ mark.textContent="✓ correct"; mark.className="q-mark ok"; }
+    else{ mark.textContent="✗ — see the correct answer above"; mark.className="q-mark no"; }
+    if(firstTime){ state.answers[qEl.getAttribute("data-qid")]=chosen; save(); refresh(); }
+  }
+
+  document.addEventListener("click",function(ev){
+    var b=ev.target.closest(".opt"); if(!b) return;
+    var qEl=b.closest(".q"); if(!qEl||qEl.classList.contains("locked")) return;
+    applyAnswer(qEl,parseInt(b.getAttribute("data-oi"),10),true);
+  });
+
+  /* ---------------- 30-day checklist ---------------- */
+  var TOTAL_CHECKS=15, WEEK1_GOAL=3;
+  function renderChecks(){
+    document.querySelectorAll(".chk").forEach(function(c){
+      var on=state.checks.indexOf(c.getAttribute("data-id"))>-1;
+      c.classList.toggle("on",on);
+      c.setAttribute("aria-pressed",on?"true":"false");
+    });
+    document.getElementById("chkCount").textContent=state.checks.length+" / "+TOTAL_CHECKS+" items checked";
+  }
+  document.addEventListener("click",function(ev){
+    var c=ev.target.closest(".chk"); if(!c) return;
+    var id=c.getAttribute("data-id");
+    var i=state.checks.indexOf(id);
+    if(i>-1) state.checks.splice(i,1); else state.checks.push(id);
+    save(); renderChecks(); refresh();
+  });
+
+  /* ---------------- progress ---------------- */
+  function week1Done(){
+    return ["w1a","w1b","w1c"].every(function(id){ return state.checks.indexOf(id)>-1; });
+  }
+  function chapterDone(ch){
+    if(ch==="c") return week1Done();
+    var qs=QUIZ[ch]||[];
+    return qs.every(function(_,qi){ return state.answers.hasOwnProperty(ch+"-"+qi); });
+  }
+  function refresh(){
+    var done=0, total=8, correct=0, answered=0, totalQ=0;
+    document.querySelectorAll(".rail a").forEach(function(a){
+      var ch=a.getAttribute("data-ch");
+      var ok=chapterDone(ch);
+      a.classList.toggle("done",ok);
+      if(ok) done++;
+    });
+    Object.keys(QUIZ).forEach(function(ch){
+      QUIZ[ch].forEach(function(q,qi){
+        totalQ++;
+        var k=ch+"-"+qi;
+        if(state.answers.hasOwnProperty(k)){ answered++; if(state.answers[k]===q.a) correct++; }
+      });
+    });
+    document.getElementById("progTxt").textContent=done+" / "+total+" chapters";
+    document.getElementById("progFill").style.width=Math.round(done/total*100)+"%";
+    var big=document.getElementById("scoreBig"), msg=document.getElementById("scoreMsg");
+    if(answered===0){ big.textContent="— / "+totalQ; big.className="score num"; }
+    else{
+      big.textContent=correct+" / "+totalQ;
+      big.className="score num "+(correct>=totalQ*0.8?"pass":"mid");
+      if(answered<totalQ) msg.textContent=(totalQ-answered)+" question"+((totalQ-answered)===1?"":"s")+" left — keep going.";
+      else if(correct>=totalQ*0.8) msg.textContent="Nice work — that's a passing score. Review any red answers above, then show this to your trainer.";
+      else msg.textContent="All answered. Review the chapters behind your missed questions, reset, and try again — aim for 17 or better.";
+    }
+  }
+
+  /* restore state */
+  renderQuizzes();
+  Object.keys(state.answers).forEach(function(qid){
+    var qEl=document.querySelector('.q[data-qid="'+qid+'"]');
+    if(qEl) applyAnswer(qEl,state.answers[qid],false);
+  });
+  renderChecks();
+  refresh();
+
+  document.getElementById("resetBtn").addEventListener("click",function(){
+    if(!confirm("Clear all your answers and checklist progress on this device?")) return;
+    state={answers:{},checks:[]}; save();
+    location.reload();
+  });
+
+  /* active-section highlight */
+  var links={}; document.querySelectorAll(".rail a").forEach(function(a){ links[a.getAttribute("href").slice(1)]=a; });
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){
+          document.querySelectorAll(".rail a.active").forEach(function(x){x.classList.remove("active");});
+          var l=links[en.target.id]; if(l) l.classList.add("active");
+        }
+      });
+    },{rootMargin:"-20% 0px -70% 0px"});
+    document.querySelectorAll(".chapter").forEach(function(s){ io.observe(s); });
+  }
+})();
+</script>
+
+</html>
