@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Optician Training</title>
+<title>VHDO Training Curriculum</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Interactive optician training — fundamentals of ophthalmic optics and dispensing, plus product knowledge.">
+<meta name="description" content="The VHDO training curriculum — nine foundational modules for every role, from welcome and corporate anatomy to clinical sales and role-specific tracks.">
 <style>
   :root{
     --bg:#FBFAF7; --surface:#FFFFFF; --ink:#1C1E20; --muted:#5B6166;
     --line:#E4E2DB; --green:#0E7A4E; --red:#BE3730;
-    --green-soft:#E7F3ED; --red-soft:#F9E9E8; --gold:#8A6D1F;
+    --green-soft:#E7F3ED; --gold:#8A6D1F; --gold-soft:#F5EEDC;
     --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
     --serif:Charter,"Bitstream Charter",Georgia,"Times New Roman",serif;
     --sans:system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
@@ -18,7 +18,7 @@
     :root{
       --bg:#141618; --surface:#1D2023; --ink:#ECEDEA; --muted:#9AA0A3;
       --line:#2E3236; --green:#4CC08A; --red:#E5726B;
-      --green-soft:#17352A; --red-soft:#3A211F; --gold:#D3B45C;
+      --green-soft:#17352A; --gold:#D3B45C; --gold-soft:#332B15;
     }
   }
   *{box-sizing:border-box}
@@ -27,34 +27,55 @@
     font-family:var(--serif); line-height:1.6;
     -webkit-font-smoothing:antialiased;
   }
-  main{max-width:680px; margin:0 auto; padding:9vh 24px 12vh}
+  main{max-width:720px; margin:0 auto; padding:9vh 24px 12vh}
   .kicker{
     font-family:var(--mono); font-size:12px; letter-spacing:.14em;
     text-transform:uppercase; color:var(--gold); margin:0 0 14px;
   }
   h1{font-size:clamp(30px,6vw,42px); line-height:1.15; margin:0 0 14px; font-weight:600}
-  .lede{color:var(--muted); font-size:18px; margin:0 0 52px; max-width:52ch}
+  .lede{color:var(--muted); font-size:18px; margin:0 0 46px; max-width:56ch}
+  h2.phase{
+    font-family:var(--sans); font-size:13px; font-weight:700;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--gold);
+    margin:46px 0 16px; padding-top:26px; border-top:1px solid var(--line);
+  }
+  h2.phase:first-of-type{border-top:0; padding-top:0; margin-top:0}
+  .phase-note{color:var(--muted); font-size:15px; margin:-8px 0 20px; max-width:58ch}
   .card{
     display:block; text-decoration:none; color:inherit;
     background:var(--surface); border:1px solid var(--line);
-    border-radius:12px; padding:26px 28px; margin-bottom:18px;
+    border-radius:12px; padding:20px 24px; margin-bottom:12px;
     transition:border-color .18s ease, transform .18s ease, box-shadow .18s ease;
   }
-  .card:hover, .card:focus-visible{
+  a.card:hover, a.card:focus-visible{
     border-color:var(--green); transform:translateY(-2px);
     box-shadow:0 8px 24px rgba(0,0,0,.07); outline:none;
   }
   .card .num{
-    font-family:var(--mono); font-size:12px; letter-spacing:.12em;
-    text-transform:uppercase; color:var(--green); margin:0 0 8px;
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--green); margin:0 0 6px;
+    display:flex; justify-content:space-between; align-items:baseline; gap:12px;
   }
-  .card h2{font-size:22px; margin:0 0 8px; font-weight:600}
-  .card p{margin:0; color:var(--muted); font-size:15.5px}
-  .card .go{
-    display:inline-block; margin-top:14px; font-family:var(--sans);
-    font-size:14px; color:var(--green); font-weight:600;
+  .card .num .status{color:var(--muted); letter-spacing:.06em}
+  .card.live .num .status{color:var(--green); font-weight:700}
+  .card h3{font-family:var(--serif); font-size:19px; margin:0 0 6px; font-weight:600}
+  .card p{margin:0; color:var(--muted); font-size:15px}
+  .card.dev{opacity:.72}
+  .card.dev .num{color:var(--muted)}
+  .card.seed{border-style:dashed}
+  .go{
+    display:inline-block; margin-top:12px; font-family:var(--sans);
+    font-size:13.5px; color:var(--green); font-weight:600;
   }
-  .card:hover .go::after{content:" →"}
+  a.card:hover .go::after{content:" →"}
+  .roadmap{
+    background:var(--gold-soft); border:1px solid var(--line);
+    border-left:3px solid var(--gold); border-radius:0 10px 10px 0;
+    padding:16px 20px; margin:20px 0 0; font-family:var(--sans); font-size:14px;
+  }
+  .roadmap b{display:block; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-bottom:8px}
+  .roadmap p{margin:0 0 8px; color:var(--ink)}
+  .roadmap p:last-child{margin:0}
   footer{
     margin-top:64px; padding-top:24px; border-top:1px solid var(--line);
     font-family:var(--sans); font-size:13px; color:var(--muted);
@@ -63,25 +84,86 @@
 </head>
 <body>
 <main>
-  <p class="kicker">Interactive Training</p>
-  <h1>Optician Training</h1>
-  <p class="lede">A two-part interactive course: the fundamentals every dispensing optician needs, then the products and how to talk about them. Work through in order, at your own pace — progress checks included.</p>
+  <p class="kicker">VHDO · Visual Health Doctors of Optometry</p>
+  <h1>Training Curriculum</h1>
+  <p class="lede">Nine foundational modules covering every role in the company — built by the VHDO training team, tested on real staff, and ultimately delivered through Trainual. Modules 1 and 2 are live now; work through them in order.</p>
 
-  <a class="card" href="part1.html">
-    <p class="num">Part 1</p>
-    <h2>Optician Fundamentals</h2>
-    <p>Ophthalmic optics from the ground up — prescriptions, lens design, materials, measurements, and dispensing essentials.</p>
-    <span class="go">Start Part 1</span>
+  <h2 class="phase">Phase 1 · The Nine Modules</h2>
+
+  <a class="card live" href="module1.html">
+    <p class="num"><span>Module 1</span><span class="status">● Live</span></p>
+    <h3>Welcome &amp; Corporate Anatomy</h3>
+    <p>What VHDO is, the eleven offices, who does what, the systems you'll touch, and how your training works. Start here on day one.</p>
+    <span class="go">Start Module 1</span>
   </a>
 
-  <a class="card" href="part2.html">
-    <p class="num">Part 2</p>
-    <h2>What We Sell</h2>
-    <p>Product knowledge and positioning — lens packages, coatings, the KPIs that measure a glasses seller, and the playbook for growing eyeglass sales.</p>
-    <span class="go">Start Part 2</span>
+  <a class="card live" href="module2.html">
+    <p class="num"><span>Module 2</span><span class="status">● Live</span></p>
+    <h3>Foundations of Opticianry &amp; Medical Basics</h3>
+    <p>How the eye works, reading prescriptions, measurements, lenses, materials, coatings, frames, contacts, insurance basics, and professionalism — with quizzes and a 44-term glossary.</p>
+    <span class="go">Start Module 2</span>
   </a>
 
-  <footer>Best experienced on desktop or tablet. Both parts save your quiz progress in your browser.</footer>
+  <div class="card dev">
+    <p class="num"><span>Module 3</span><span class="status">In development</span></p>
+    <h3>Order of Operations &amp; The Lab Ecosystem</h3>
+    <p>How an order becomes a physical job — lab flow, timelines, quality checks, and why remakes cost real money.</p>
+  </div>
+
+  <div class="card dev">
+    <p class="num"><span>Module 4</span><span class="status">In development</span></p>
+    <h3>Insurance Matrix 101 &amp; Practical Ledger Application</h3>
+    <p>Carriers, plans, allowances, authorizations, and hands-on ledger work.</p>
+  </div>
+
+  <div class="card dev">
+    <p class="num"><span>Module 5</span><span class="status">In development</span></p>
+    <h3>EPM Mastery (Eyefinity Encompass)</h3>
+    <p>Deep training on the practice management system every order and record flows through.</p>
+  </div>
+
+  <div class="card dev">
+    <p class="num"><span>Module 6</span><span class="status">In development</span></p>
+    <h3>The Art of Clinical Sales</h3>
+    <p>Selling as an extension of the doctor's care — capture, the lens ladder, KPIs, and the plays that grow eyeglass sales.</p>
+  </div>
+
+  <div class="card dev">
+    <p class="num"><span>Module 7</span><span class="status">In development</span></p>
+    <h3>Training for OM's</h3>
+    <p>The Office Manager track.</p>
+  </div>
+
+  <div class="card dev">
+    <p class="num"><span>Module 8</span><span class="status">In development</span></p>
+    <h3>Training for TD's</h3>
+    <p>The Territory Director track.</p>
+  </div>
+
+  <div class="card dev">
+    <p class="num"><span>Module 9</span><span class="status">In development</span></p>
+    <h3>Training for OD's</h3>
+    <p>The Optometrist track.</p>
+  </div>
+
+  <h2 class="phase">Interim Material</h2>
+  <p class="phase-note">Live now, and required for selling roles until Modules 4 and 6 replace it. Built from VHDO's own sales records.</p>
+
+  <a class="card live seed" href="part2.html">
+    <p class="num"><span>Interim</span><span class="status">● Live — folds into Modules 4 &amp; 6</span></p>
+    <h3>What We Sell</h3>
+    <p>Our real product menu, exam codes, lens ladder, coatings, contacts, insurance in practice, the KPIs that measure a glasses seller, and the sales playbook.</p>
+    <span class="go">Open the sales training</span>
+  </a>
+
+  <div class="roadmap">
+    <b>The Build-Out Plan</b>
+    <p><strong>Phase 1</strong> — the training team writes the nine foundational modules above (8–10 weeks).</p>
+    <p><strong>Phase 2</strong> — at 60% complete, the curriculum uploads to Trainual and is tested on real staff.</p>
+    <p><strong>Phase 3</strong> — full onboarding for all existing VHDO team members, and the standard playbook for every new office.</p>
+  </div>
+
+  <footer>Best experienced on desktop or tablet. Quiz progress saves in your browser, per device.</footer>
 </main>
 </body>
 </html>

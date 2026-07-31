@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>VHDO · Module 1 · Welcome &amp; Corporate Anatomy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --bg:#FBFAF7; --surface:#FFFFFF; --ink:#1C1E20; --muted:#5B6166;
+    --line:#E4E2DB; --green:#0E7A4E; --red:#BE3730;
+    --green-soft:#E7F3ED; --red-soft:#F9E9E8; --gold:#8A6D1F; --gold-soft:#F5EEDC;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --serif:Charter,"Bitstream Charter",Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#141618; --surface:#1D2023; --ink:#ECEDEA; --muted:#9AA0A3;
+      --line:#2E3236; --green:#4CC08A; --red:#E5726B;
+      --green-soft:#17352A; --red-soft:#3A211F; --gold:#D3B45C; --gold-soft:#332B15;
+    }
+  }
+  :root[data-theme="light"]{
+    --bg:#FBFAF7; --surface:#FFFFFF; --ink:#1C1E20; --muted:#5B6166;
+    --line:#E4E2DB; --green:#0E7A4E; --red:#BE3730;
+    --green-soft:#E7F3ED; --red-soft:#F9E9E8; --gold:#8A6D1F; --gold-soft:#F5EEDC;
+  }
+  :root[data-theme="dark"]{
+    --bg:#141618; --surface:#1D2023; --ink:#ECEDEA; --muted:#9AA0A3;
+    --line:#2E3236; --green:#4CC08A; --red:#E5726B;
+    --green-soft:#17352A; --red-soft:#3A211F; --gold:#D3B45C; --gold-soft:#332B15;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.65}
+
+  .top{position:sticky;top:0;z-index:40;background:var(--bg);border-bottom:1px solid var(--line)}
+  .top-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:10px 20px}
+  .mark{font-family:var(--sans);font-weight:800;letter-spacing:.14em;font-size:14px}
+  .mark small{display:block;font-weight:400;letter-spacing:.08em;font-size:10.5px;color:var(--muted);text-transform:uppercase}
+  .prog{margin-left:auto;display:flex;align-items:center;gap:10px;font-family:var(--sans);font-size:12.5px;color:var(--muted)}
+  .prog-bar{width:120px;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+  .prog-bar i{display:block;height:100%;width:0%;background:var(--green);transition:width .4s ease}
+  @media (prefers-reduced-motion: reduce){ .prog-bar i{transition:none} }
+
+  .shell{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:225px minmax(0,1fr);gap:44px;padding:0 20px}
+  @media (max-width:900px){ .shell{grid-template-columns:minmax(0,1fr)} }
+
+  .rail{position:sticky;top:64px;align-self:start;height:calc(100vh - 80px);overflow-y:auto;padding:26px 0 30px;font-family:var(--sans)}
+  .rail-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);margin:0 0 10px}
+  .rail a{display:flex;align-items:center;gap:9px;padding:6px 8px 6px 0;color:var(--muted);text-decoration:none;font-size:13px;line-height:1.3;border-radius:6px}
+  .rail a:hover{color:var(--ink)}
+  .rail a.active{color:var(--ink);font-weight:600}
+  .tick{flex:0 0 14px;width:14px;height:14px;border-radius:50%;border:1.5px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:9px;color:transparent}
+  a.done .tick{background:var(--green);border-color:var(--green);color:#fff}
+  @media (max-width:900px){
+    .rail{position:sticky;top:47px;z-index:30;height:auto;display:flex;gap:6px;overflow-x:auto;padding:8px 0;background:var(--bg);border-bottom:1px solid var(--line);margin:0 -20px;padding-left:20px;padding-right:20px}
+    .rail-label{display:none}
+    .rail a{flex:0 0 auto;border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:var(--surface);white-space:nowrap}
+    .rail a .nav-t{display:none}
+    .rail a.done{border-color:var(--green)}
+  }
+
+  main{padding-bottom:90px;min-width:0}
+
+  .hero{padding:64px 0 30px;text-align:center}
+  .ticket{font-family:var(--mono);max-width:390px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:20px 22px 16px;text-align:left;font-size:13px;line-height:2;box-shadow:0 1px 0 var(--line)}
+  .ticket .t-hd{text-align:center;font-family:var(--sans);font-weight:800;letter-spacing:.18em;font-size:13px;border-bottom:1px dashed var(--line);padding-bottom:8px;margin-bottom:10px}
+  .ticket .t-hd small{display:block;font-weight:400;letter-spacing:.1em;font-size:9.5px;color:var(--muted);text-transform:uppercase;margin-top:2px}
+  .t-row{display:flex;justify-content:space-between;gap:12px}
+  .t-row b{font-variant-numeric:tabular-nums;font-weight:700}
+  .t-row.dim{color:var(--muted)}
+  .t-total{border-top:1px dashed var(--line);margin-top:8px;padding-top:8px;font-size:15px}
+  .t-total b{color:var(--green)}
+  .t-row{opacity:0;transform:translateY(5px);animation:rise .5s ease forwards}
+  .t-row:nth-child(3){animation-delay:.08s}.t-row:nth-child(4){animation-delay:.16s}
+  .t-row:nth-child(5){animation-delay:.24s}.t-total{animation-delay:.32s}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){ .t-row{opacity:1;transform:none;animation:none} }
+  .duo{height:4px;max-width:250px;margin:26px auto 0;display:flex;border-radius:2px;overflow:hidden}
+  .duo i{flex:1}.duo i:first-child{background:var(--green)}.duo i:last-child{background:var(--red)}
+  .hero p{max-width:60ch;margin:24px auto 0;color:var(--muted);text-align:left}
+  .hero .part{font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-top:22px}
+
+  .chapter{padding:52px 0 8px;border-top:1px solid var(--line);margin-top:44px}
+  .eyebrow{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:0 0 6px}
+  h2{font-family:var(--sans);font-weight:800;font-size:clamp(23px,3.4vw,30px);letter-spacing:-.01em;line-height:1.15;margin:0 0 18px;text-wrap:balance}
+  h3{font-family:var(--sans);font-size:16px;font-weight:700;margin:30px 0 10px}
+  .prose{max-width:66ch}
+  .prose p{margin:0 0 14px}
+  .prose ul,.prose ol{margin:0 0 14px;padding-left:22px}
+  .prose li{margin-bottom:6px}
+  strong{font-weight:700}
+  code{font-family:var(--mono);font-size:.88em;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:1px 5px;white-space:nowrap}
+  .tablewrap{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+  table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:13.5px;min-width:480px}
+  th{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;text-align:left;color:var(--muted);font-weight:600}
+  th,td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:0}
+  td:first-child{font-weight:600}
+  td.r,th.r{text-align:right}
+  .num{font-variant-numeric:tabular-nums}
+  td .num,td code{font-weight:400}
+
+  .script{margin:20px 0;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--green);border-radius:0 8px 8px 0;padding:14px 18px;max-width:64ch}
+  .script .lab{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin:0 0 6px}
+  .script p{margin:0;font-style:italic}
+
+  .note{margin:20px 0;background:var(--gold-soft);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:14px 18px;max-width:64ch}
+  .note .lab{font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 6px}
+  .note p{margin:0 0 10px}
+  .note p:last-child{margin:0}
+
+  .quiz{margin:34px 0 10px;background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .quiz-duo{height:3px;display:flex}.quiz-duo i{flex:1}
+  .quiz-duo i:first-child{background:var(--green)}.quiz-duo i:last-child{background:var(--red)}
+  .quiz-in{padding:18px 20px 8px}
+  .quiz-t{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin:0 0 4px}
+  .quiz-s{font-family:var(--sans);font-size:12px;color:var(--muted);margin:0 0 14px}
+  .q{margin:0 0 20px}
+  .q-t{font-family:var(--sans);font-size:14.5px;font-weight:600;margin:0 0 10px;line-height:1.45}
+  .opts{display:flex;flex-direction:column;gap:7px}
+  .opt{font-family:var(--sans);font-size:13.5px;text-align:left;padding:9px 13px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:7px;cursor:pointer;line-height:1.4}
+  .opt:hover{border-color:var(--muted)}
+  .opt:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+  .q.locked .opt{cursor:default;opacity:.55}
+  .q.locked .opt:hover{border-color:var(--line)}
+  .q .opt.right{opacity:1;background:var(--green-soft);border-color:var(--green);font-weight:600}
+  .q .opt.wrong{opacity:1;background:var(--red-soft);border-color:var(--red)}
+  .expl{display:none;font-family:var(--sans);font-size:13px;margin-top:9px;padding:9px 12px;border-radius:6px;background:var(--bg);border:1px dashed var(--line);color:var(--muted)}
+  .q.locked .expl{display:block}
+  .q-mark{font-family:var(--mono);font-size:11px;margin-left:6px}
+  .q-mark.ok{color:var(--green)} .q-mark.no{color:var(--red)}
+
+  .finish{margin-top:56px;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:26px 26px 22px;text-align:center}
+  .finish h2{margin-bottom:6px}
+  .score{font-family:var(--mono);font-size:38px;font-weight:700;margin:10px 0 2px;font-variant-numeric:tabular-nums}
+  .score.pass{color:var(--green)} .score.mid{color:var(--gold)}
+  .finish p{color:var(--muted);font-family:var(--sans);font-size:14px;max-width:52ch;margin:8px auto}
+  .finish a{color:var(--green)}
+  .resetbtn{font-family:var(--sans);font-size:12.5px;margin-top:12px;background:none;border:1px solid var(--line);color:var(--muted);padding:7px 14px;border-radius:7px;cursor:pointer}
+  .resetbtn:hover{color:var(--ink);border-color:var(--muted)}
+  .resetbtn:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+  footer{margin-top:40px;text-align:center;font-family:var(--sans);font-size:11.5px;color:var(--muted)}
+  footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="top"><div class="top-in">
+  <div class="mark">VHDO<small>Training Curriculum · Module 1</small></div>
+  <div class="prog"><span id="progTxt">0 / 5 chapters</span><div class="prog-bar"><i id="progFill"></i></div></div>
+</div></div>
+
+<div class="shell">
+<nav class="rail" id="rail" aria-label="Chapters">
+  <p class="rail-label">Module 1</p>
+  <a href="#ch1" data-ch="1"><span class="tick">✓</span><span class="nav-n">1</span><span class="nav-t">&nbsp;Welcome to VHDO</span></a>
+  <a href="#ch2" data-ch="2"><span class="tick">✓</span><span class="nav-n">2</span><span class="nav-t">&nbsp;The Eleven Offices</span></a>
+  <a href="#ch3" data-ch="3"><span class="tick">✓</span><span class="nav-n">3</span><span class="nav-t">&nbsp;Who's Who</span></a>
+  <a href="#ch4" data-ch="4"><span class="tick">✓</span><span class="nav-n">4</span><span class="nav-t">&nbsp;The Systems You'll Touch</span></a>
+  <a href="#ch5" data-ch="5"><span class="tick">✓</span><span class="nav-n">5</span><span class="nav-t">&nbsp;Your Training Path</span></a>
+</nav>
+
+<main>
+<section class="hero">
+  <div class="ticket" role="img" aria-label="VHDO at a glance: 11 offices across Northern Virginia, 1,215 orders and $590,197 net in a recent two-week period">
+    <div class="t-hd">VHDO<small>Visual Health Doctors of Optometry</small></div>
+    <div class="t-row dim"><span>OFFICES</span><b>11</b></div>
+    <div class="t-row dim"><span>REGION</span><b>NORTHERN VA</b></div>
+    <div class="t-row dim"><span>ORDERS / 2 WK</span><b>1,215</b></div>
+    <div class="t-row t-total"><span>NET / 2 WK</span><b>$590,197</b></div>
+  </div>
+  <div class="duo"><i></i><i></i></div>
+  <p class="part">Module 1 of the VHDO Training Curriculum — Welcome &amp; Corporate Anatomy</p>
+  <p>Welcome to Visual Health Doctors of Optometry. Before you learn a single lens term, you should know what this company is, how it's organised, who does what, and where you fit. That's this module: the anatomy of VHDO. It's short on purpose — read it on your first day, take the quizzes, and you'll walk into your office knowing whose name to call for which problem. That alone puts you ahead of most first weeks anywhere.</p>
+  <p>Each chapter ends with a short <em>Check Yourself</em> quiz. Answer every question to mark the chapter complete — your progress saves on this device.</p>
+</section>
+
+<!-- ================= CH 1 ================= -->
+<section class="chapter" id="ch1">
+  <p class="eyebrow">Chapter 1</p>
+  <h2>Welcome to VHDO</h2>
+  <div class="prose">
+    <p><strong>Visual Health Doctors of Optometry</strong> is a doctor-led optometry group with <strong>eleven offices across Northern Virginia</strong>. Patients come to us first for eye care — comprehensive exams, medical visits, contact lens fittings — and then for the eyewear that comes out of that care.</p>
+    <p>That order matters, and it shapes everything about how we work. In a recent two-week period the company wrote <strong>1,215 orders for $590,197 net</strong>, and the single largest share of that revenue was <strong>professional services — the doctors' exams</strong>, not merchandise. We are a healthcare practice with a dispensary attached, not a glasses store with a doctor in the back. Patients feel that difference, and it's why they trust the recommendations we make.</p>
+    <p>Three things we expect from everyone, in every role, from day one:</p>
+    <ul>
+      <li><strong>Never guess in front of a patient.</strong> "Let me find out" is a professional answer. A confident wrong answer is the only real mistake in this company.</li>
+      <li><strong>Treat patient information as medical information</strong> — because it is. What you see on a ticket, a chart, or a screen stays inside these walls.</li>
+      <li><strong>Finish the visit.</strong> Every patient should leave with their care complete — exam done, questions answered, eyewear handled, next step booked. Half-finished visits are where patients, and revenue, quietly leak away.</li>
+    </ul>
+    <div class="note"><p class="lab">Training team — to complete</p><p>Company history, founding story, mission statement, and current leadership introductions go here. <strong>Owner: training team (Kat, Erla, Natalia, Sherief, Zee).</strong></p></div>
+  </div>
+  <div class="quiz" data-ch="1"></div>
+</section>
+
+<!-- ================= CH 2 ================= -->
+<section class="chapter" id="ch2">
+  <p class="eyebrow">Chapter 2</p>
+  <h2>The Eleven Offices</h2>
+  <div class="prose">
+    <p>Every VHDO office carries the same standards, the same systems, and the same product menu — but they are very different sizes. Here they are, ranked by net sales in the same two-week snapshot:</p>
+    <div class="tablewrap"><table>
+      <tr><th>Office</th><th class="r">Net sales (2 wks)</th></tr>
+      <tr><td>VHDO Arlington</td><td class="r num">$92,174</td></tr>
+      <tr><td>VHDO Ballston</td><td class="r num">$82,335</td></tr>
+      <tr><td>VHDO Woodbridge</td><td class="r num">$75,434</td></tr>
+      <tr><td>VHDO Alexandria</td><td class="r num">$70,802</td></tr>
+      <tr><td>VHDO McLean</td><td class="r num">$69,063</td></tr>
+      <tr><td>VHDO Fairfax</td><td class="r num">$65,669</td></tr>
+      <tr><td>VHDO Falls Church</td><td class="r num">$58,473</td></tr>
+      <tr><td>VHDO Ashburn</td><td class="r num">$44,466</td></tr>
+      <tr><td>VHDO Reston</td><td class="r num">$33,286</td></tr>
+      <tr><td>VHDO Herndon</td><td class="r num">$30,465</td></tr>
+      <tr><td>VHDO Burke</td><td class="r num">$17,181</td></tr>
+    </table></div>
+    <p>Notice the spread: <strong>Arlington does more than five times the volume of Burke.</strong> A big-office day and a small-office day feel different — more doctors on the schedule, more walk-ins, more hands on deck — but the standard of care and the numbers you're measured on are the same everywhere. Staff also move between offices when coverage is needed, so learn the office names early; you'll hear them constantly.</p>
+    <p>Offices are grouped into <strong>territories</strong>, each overseen by a <strong>Territory Director (TD)</strong> who is responsible for the performance of several offices at once. Your office's leadership chain runs: you → your <strong>Office Manager (OM)</strong> → your <strong>TD</strong>. Chapter 3 explains what each of those people actually does.</p>
+    <div class="note"><p class="lab">Training team — to complete</p><p>Office addresses, phone numbers, doctor rosters per office, and the current territory map go here.</p></div>
+  </div>
+  <div class="quiz" data-ch="2"></div>
+</section>
+
+<!-- ================= CH 3 ================= -->
+<section class="chapter" id="ch3">
+  <p class="eyebrow">Chapter 3</p>
+  <h2>Who's Who — The Anatomy of VHDO</h2>
+  <div class="prose">
+    <p>Six kinds of people make a VHDO office run. Learn what each one owns, and — just as important — what questions belong to whom.</p>
+    <div class="tablewrap"><table>
+      <tr><th>Role</th><th>What they own</th><th>Bring them…</th></tr>
+      <tr><td>OD — Optometrist</td><td>The clinical side: exams, diagnoses, prescriptions, medical decisions</td><td>Anything clinical. Never answer a medical question yourself</td></tr>
+      <tr><td>Optician / Sales Associate</td><td>The dispensary: measurements, lens and frame selection, orders, dispensing — this is you</td><td>—</td></tr>
+      <tr><td>OM — Office Manager</td><td>Daily office operations: schedule, staffing, escalations, cash handling, patient complaints</td><td>Day-to-day problems, scheduling, an unhappy patient</td></tr>
+      <tr><td>TD — Territory Director</td><td>Multiple offices: performance, standards, staffing across the territory</td><td>What your OM escalates; territory-level questions</td></tr>
+      <tr><td>Billing team</td><td>Insurance claims, carrier rules, authorizations, payment posting</td><td>Any claim, coverage or carrier question (via your OM)</td></tr>
+      <tr><td>Lab</td><td>Lens fabrication, edging, quality checks, redos</td><td>Job status, remakes, breakage (Module 3 covers this world)</td></tr>
+    </table></div>
+    <p>The habit to build: <strong>route the question, don't absorb it.</strong> When a patient asks something outside your lane — "is this cataract serious?", "why did my insurance deny this?" — your job is a warm handoff to the right person, not an improvised answer. Patients respect "that's a question for the doctor, let me get them" far more than a guess.</p>
+    <div class="script"><p class="lab">Say it to a patient</p><p>"That's really a question for Dr. — let me grab them before you leave so you get the right answer, not my best guess."</p></div>
+    <div class="note"><p class="lab">Training team — to complete</p><p>Current org chart with names: leadership, TDs and their territories, OMs by office, billing team contacts, and HR/payroll contacts.</p></div>
+  </div>
+  <div class="quiz" data-ch="3"></div>
+</section>
+
+<!-- ================= CH 4 ================= -->
+<section class="chapter" id="ch4">
+  <p class="eyebrow">Chapter 4</p>
+  <h2>The Systems You'll Touch</h2>
+  <div class="prose">
+    <p>Four systems run this company. You'll be trained on each in depth later in the curriculum — for now, know what each one is and what lives inside it.</p>
+    <ul>
+      <li><strong>Eyefinity Encompass — our EPM</strong> (electronic practice management). Patient records, appointments, exams, orders, tickets, payments. Everything you sell and everything the doctor documents flows through it. <strong>Module 5 is devoted entirely to mastering it.</strong></li>
+      <li><strong>The lab ecosystem.</strong> Every spectacle order you write becomes a physical job — surfaced, coated, edged, inspected. Where jobs go, how long they take, and why remakes hurt is <strong>Module 3</strong>.</li>
+      <li><strong>The insurance matrix.</strong> Carriers, plans, allowances, authorizations, and the ledger where it all has to reconcile. <strong>Module 4</strong> builds this from the ground up with practical ledger work.</li>
+      <li><strong>Trainual.</strong> The platform where this curriculum will ultimately live, assign, and track completion for every team member. During the build-out you're reading the web version; the destination is Trainual.</li>
+    </ul>
+    <p>One rule covers all of them: <strong>these systems hold live patient and financial data — when you're unsure, stop and ask before you click.</strong> An improvised click in Eyefinity can mis-bill a claim or overwrite an order. There is no prize for figuring it out alone; there is a cost for guessing wrong.</p>
+    <div class="note"><p class="lab">Training team — to complete</p><p>Login/account setup steps for each system, password policy, and who provisions access for a new hire.</p></div>
+  </div>
+  <div class="quiz" data-ch="4"></div>
+</section>
+
+<!-- ================= CH 5 ================= -->
+<section class="chapter" id="ch5">
+  <p class="eyebrow">Chapter 5</p>
+  <h2>Your Training Path</h2>
+  <div class="prose">
+    <p>This module is the first of nine. Here's the full curriculum and where it stands:</p>
+    <div class="tablewrap"><table>
+      <tr><th>#</th><th>Module</th><th class="r">Status</th></tr>
+      <tr><td>1</td><td>Welcome &amp; Corporate Anatomy</td><td class="r">✅ You're in it</td></tr>
+      <tr><td>2</td><td>Foundations of Opticianry &amp; Medical Basics</td><td class="r">✅ Live — take it next</td></tr>
+      <tr><td>3</td><td>Order of Operations &amp; The Lab Ecosystem</td><td class="r">In development</td></tr>
+      <tr><td>4</td><td>Insurance Matrix 101 &amp; Practical Ledger Application</td><td class="r">In development</td></tr>
+      <tr><td>5</td><td>EPM Mastery (Eyefinity Encompass)</td><td class="r">In development</td></tr>
+      <tr><td>6</td><td>The Art of Clinical Sales</td><td class="r">In development</td></tr>
+      <tr><td>7</td><td>Training for OM's</td><td class="r">In development</td></tr>
+      <tr><td>8</td><td>Training for TD's</td><td class="r">In development</td></tr>
+      <tr><td>9</td><td>Training for OD's</td><td class="r">In development</td></tr>
+    </table></div>
+    <p>While Modules 3–9 are being written, the interim sales training — <a href="part2.html"><strong>What We Sell</strong></a> — stays live. It covers our real product menu, KPIs and sales strategies from company data, and its content will fold into Modules 4 and 6. If you're in a selling role, complete it after Module 2.</p>
+    <p>The build-out itself runs in three phases: <strong>Phase 1</strong> — the training team (Kat, Erla, Natalia, Sherief, and Zee) writes these nine foundational modules, an 8–10 week effort. <strong>Phase 2</strong> — at 60% complete, the curriculum uploads to Trainual and gets tested on real staff. <strong>Phase 3</strong> — full onboarding for every existing VHDO team member, and the standard playbook for every new office we open.</p>
+    <p>Your part is simpler: <strong>finish this module's quizzes, then start <a href="module2.html">Module 2 — Foundations of Opticianry &amp; Medical Basics</a>.</strong></p>
+  </div>
+  <div class="quiz" data-ch="5"></div>
+</section>
+
+<!-- ================= FINISH ================= -->
+<section class="finish" id="finish">
+  <p class="eyebrow">Completion</p>
+  <h2>Your Score</h2>
+  <div class="score num" id="scoreBig">— / 15</div>
+  <p id="scoreMsg">Answer every chapter's Check Yourself questions to complete Module 1.</p>
+  <p>When you're done, show this screen to your trainer — then continue to <a href="module2.html"><strong>Module 2: Foundations of Opticianry &amp; Medical Basics</strong></a>.</p>
+  <button class="resetbtn" id="resetBtn" type="button">Reset my progress</button>
+</section>
+
+<footer>VHDO · Visual Health Doctors of Optometry — Training Curriculum, Module 1 · <a href="index.html">All modules</a> · <a href="module2.html">Module 2</a> · Progress is saved on this device only</footer>
+</main>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY="vhdo-train-m1";
+  var state={};
+  try{ state=JSON.parse(localStorage.getItem(KEY)||"{}")||{}; }catch(e){ state={}; }
+  state.answers=state.answers||{};
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} }
+
+  var QUIZ={
+    1:[
+      {q:"What kind of company is VHDO?",o:["A doctor-led optometry group — a healthcare practice with a dispensary attached","A glasses retailer with a doctor in the back","An online contact lens seller","An insurance company"],a:0,e:"Patients come to us first for eye care; the largest share of revenue is the doctors' professional services. That order shapes how we sell and how patients trust us."},
+      {q:"How many offices does VHDO run, and where?",o:["Eleven, across Northern Virginia","Three, in Washington DC","Eleven, spread across three states","Twenty, nationwide"],a:0,e:"Eleven offices, all in Northern Virginia — from Arlington to Burke. You'll hear the office names daily, so learn them early."},
+      {q:"What's the one real mistake at VHDO?",o:["Guessing in front of a patient instead of saying \"let me find out\"","Asking a question twice","Taking too long with a patient","Escalating to your OM"],a:0,e:"\"Let me find out\" is a professional answer. A confident wrong answer — clinical, billing, or product — is the mistake this company doesn't accept."}
+    ],
+    2:[
+      {q:"In the two-week snapshot, which office had the highest net sales?",o:["Arlington — $92,174","Burke","Fairfax","Reston"],a:0,e:"Arlington leads, at more than five times Burke's volume. Office sizes differ; the standards and the metrics don't."},
+      {q:"What is a territory?",o:["A group of offices overseen by one Territory Director","Another name for one office","The area a patient lives in","A sales quota"],a:0,e:"Offices are grouped into territories, each run by a TD responsible for several offices' performance. Your chain: you → OM → TD."},
+      {q:"You're asked to cover a shift at another office. What should you expect?",o:["Same standards, systems and product menu — different pace and headcount","Completely different products","Different quality standards","You can't work at another office"],a:0,e:"Every office runs the same playbook. Big offices feel busier, small ones leaner — but the metrics you're measured on travel with you."}
+    ],
+    3:[
+      {q:"A patient asks whether their cataract is serious. Who answers?",o:["The OD — get the doctor for a warm handoff; never answer clinically yourself","You, if you remember the chapter on cataracts","The Office Manager","The billing team"],a:0,e:"Clinical questions belong to the doctor, always. Route the question, don't absorb it — patients respect the handoff more than a guess."},
+      {q:"Who owns the daily schedule, staffing and escalations in your office?",o:["The OM — Office Manager","The TD","The lab","The most senior optician"],a:0,e:"The OM runs the office day to day. The TD oversees several offices and handles what OMs escalate."},
+      {q:"A claim was denied and the patient wants to know why. Where does that question go?",o:["The billing team, routed through your OM","You should interpret the denial yourself","The doctor","The lab"],a:0,e:"Insurance claims, carrier rules and authorizations are the billing team's lane. Your job is the warm handoff and keeping the patient calm."}
+    ],
+    4:[
+      {q:"What is Eyefinity Encompass?",o:["Our EPM — patient records, appointments, orders, tickets and payments all flow through it","Our lens lab","A frame brand","The training platform"],a:0,e:"It's the system at the center of everything you'll do; Module 5 is devoted entirely to mastering it."},
+      {q:"Where will this curriculum ultimately live and be tracked?",o:["Trainual","Eyefinity","A printed binder","Email"],a:0,e:"Phase 2 of the build-out uploads the curriculum to Trainual, which assigns modules and tracks completion for every team member."},
+      {q:"You're unsure what a button in Eyefinity does. What's the rule?",o:["Stop and ask before you click — these systems hold live patient and financial data","Click it and see","Try it on a real patient's order","Restart the computer"],a:0,e:"An improvised click can mis-bill a claim or overwrite an order. There's no prize for figuring it out alone."}
+    ],
+    5:[
+      {q:"Which modules are live right now?",o:["Modules 1 and 2, plus the interim sales training \"What We Sell\"","All nine","Only this one","None — everything is in Trainual"],a:0,e:"Modules 1–2 are live; 3–9 are being written by the training team. The interim sales training folds into Modules 4 and 6 later."},
+      {q:"What happens when the curriculum reaches 60% built?",o:["Phase 2 — it uploads to Trainual and gets tested on real staff","It gets printed","Phase 3 begins immediately","Training pauses"],a:0,e:"Phase 2 is the Trainual upload and live testing. Phase 3 then rolls full onboarding to every existing team member and every new office."},
+      {q:"You've finished Module 1. What's next?",o:["Module 2 — Foundations of Opticianry & Medical Basics","Module 9","Wait for Modules 3–9","Nothing — training is done"],a:0,e:"The path is sequential: Module 2 teaches the optical foundations everything else builds on."}
+    ]
+  };
+
+  function renderQuizzes(){
+    document.querySelectorAll(".quiz").forEach(function(el){
+      var ch=el.getAttribute("data-ch"), qs=QUIZ[ch]; if(!qs) return;
+      var html='<div class="quiz-duo"><i></i><i></i></div><div class="quiz-in">'
+        +'<p class="quiz-t">Check yourself · Chapter '+ch+'</p>'
+        +'<p class="quiz-s">Answer all '+qs.length+' to mark this chapter complete.</p>';
+      qs.forEach(function(q,qi){
+        var qid=ch+"-"+qi;
+        var order=[0,1,2,3].slice(0,q.o.length);
+        var rot=(parseInt(ch,10)+qi)%q.o.length;
+        order=order.map(function(i){return (i+rot)%q.o.length;});
+        html+='<div class="q" data-qid="'+qid+'" data-a="'+q.a+'"><p class="q-t">'+(qi+1)+'. '+q.q+'<span class="q-mark"></span></p><div class="opts">';
+        order.forEach(function(oi){
+          html+='<button type="button" class="opt" data-oi="'+oi+'">'+q.o[oi]+'</button>';
+        });
+        html+='</div><div class="expl">'+q.e+'</div></div>';
+      });
+      el.innerHTML=html+"</div>";
+    });
+  }
+
+  function applyAnswer(qEl,chosen,firstTime){
+    var a=parseInt(qEl.getAttribute("data-a"),10);
+    qEl.classList.add("locked");
+    var mark=qEl.querySelector(".q-mark");
+    qEl.querySelectorAll(".opt").forEach(function(b){
+      var oi=parseInt(b.getAttribute("data-oi"),10);
+      b.disabled=true;
+      if(oi===a) b.classList.add("right");
+      else if(oi===chosen) b.classList.add("wrong");
+    });
+    if(chosen===a){ mark.textContent="✓ correct"; mark.className="q-mark ok"; }
+    else{ mark.textContent="✗ — see the correct answer above"; mark.className="q-mark no"; }
+    if(firstTime){ state.answers[qEl.getAttribute("data-qid")]=chosen; save(); refresh(); }
+  }
+
+  document.addEventListener("click",function(ev){
+    var b=ev.target.closest(".opt"); if(!b) return;
+    var qEl=b.closest(".q"); if(!qEl||qEl.classList.contains("locked")) return;
+    applyAnswer(qEl,parseInt(b.getAttribute("data-oi"),10),true);
+  });
+
+  function chapterDone(ch){
+    var qs=QUIZ[ch]||[];
+    return qs.every(function(_,qi){ return state.answers.hasOwnProperty(ch+"-"+qi); });
+  }
+  function refresh(){
+    var done=0, total=5, correct=0, answered=0, totalQ=0;
+    document.querySelectorAll(".rail a").forEach(function(a){
+      var ch=a.getAttribute("data-ch");
+      var ok=chapterDone(ch);
+      a.classList.toggle("done",ok);
+      if(ok) done++;
+    });
+    Object.keys(QUIZ).forEach(function(ch){
+      QUIZ[ch].forEach(function(q,qi){
+        totalQ++;
+        var k=ch+"-"+qi;
+        if(state.answers.hasOwnProperty(k)){ answered++; if(state.answers[k]===q.a) correct++; }
+      });
+    });
+    document.getElementById("progTxt").textContent=done+" / "+total+" chapters";
+    document.getElementById("progFill").style.width=Math.round(done/total*100)+"%";
+    var big=document.getElementById("scoreBig"), msg=document.getElementById("scoreMsg");
+    if(answered===0){ big.textContent="— / "+totalQ; big.className="score num"; }
+    else{
+      big.textContent=correct+" / "+totalQ;
+      big.className="score num "+(correct>=totalQ*0.8?"pass":"mid");
+      if(answered<totalQ) msg.textContent=(totalQ-answered)+" question"+((totalQ-answered)===1?"":"s")+" left — keep going.";
+      else if(correct>=totalQ*0.8) msg.textContent="Nice work — that's a passing score. Review any red answers above, then show this to your trainer.";
+      else msg.textContent="All answered. Review the chapters behind your missed questions, reset, and try again — aim for 12 or better.";
+    }
+  }
+
+  renderQuizzes();
+  Object.keys(state.answers).forEach(function(qid){
+    var qEl=document.querySelector('.q[data-qid="'+qid+'"]');
+    if(qEl) applyAnswer(qEl,state.answers[qid],false);
+  });
+  refresh();
+
+  document.getElementById("resetBtn").addEventListener("click",function(){
+    if(!confirm("Clear all your answers on this device?")) return;
+    state={answers:{}}; save();
+    location.reload();
+  });
+
+  var links={}; document.querySelectorAll(".rail a").forEach(function(a){ links[a.getAttribute("href").slice(1)]=a; });
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){
+          document.querySelectorAll(".rail a.active").forEach(function(x){x.classList.remove("active");});
+          var l=links[en.target.id]; if(l) l.classList.add("active");
+        }
+      });
+    },{rootMargin:"-20% 0px -70% 0px"});
+    document.querySelectorAll(".chapter").forEach(function(s){ io.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
